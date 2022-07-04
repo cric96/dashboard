@@ -1,5 +1,7 @@
 # dashboard
 
+Here you can visit the Web App of Smart Waste Collection : https://smartwastecollection.github.io/dashboard/
+
 ## Project setup
 ```
 npm install
@@ -19,6 +21,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
