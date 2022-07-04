@@ -1,0 +1,13 @@
+<template>
+Account
+</template>
+
+<script>
+export default {
+  name: "AccountComponent"
+}
+</script>
+
+<style scoped>
+
+</style>

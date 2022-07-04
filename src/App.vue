@@ -1,11 +1,16 @@
 <template>
+  <NavBar/>
+  <div class="flex justify-content-center my-5">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-
+import NavBar from "@/components/structure/NavBar";
 export default {
   name: 'App',
   components: {
+    NavBar,
   }
 }
 </script>
@@ -17,6 +22,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+html, body {
+  padding: 0 !important;
+  margin: 0 !important;
 }
 </style>
