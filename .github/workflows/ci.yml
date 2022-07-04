@@ -6,6 +6,11 @@ on:
     branches:
       - develop
       - main
+    branches-ignore:
+      - revovate/**
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
   pull_request:
     branches:
       - develop
