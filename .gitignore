@@ -1,25 +1,23 @@
 .DS_Store
+node_modules
 /dist
-/public
 
-# Editor
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
 .idea
 .vscode
-
-# Logs
-logs
-*.log
-npm-debug.log*
-
-# Dependency directories
-node_modules/
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# dotenv environment variables file
-.env
-.env.test
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
