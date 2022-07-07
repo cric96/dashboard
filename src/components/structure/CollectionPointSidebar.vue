@@ -1,10 +1,26 @@
 <template>
-$END$
+  <Sidebar>
+    <template #header>
+      <h1> Collection Point </h1>
+      <p></p>
+    </template>
+
+    <template #content>
+      <div class="flex flex-column justify-content-evenly">
+        Prova
+      </div>
+    </template>
+  </Sidebar>
 </template>
 
 <script>
+import Sidebar from "@/components/structure/Sidebar";
+
 export default {
-name: "CollectionPointSidebar"
+  name: "CollectionPointSidebar",
+  components:{
+    Sidebar,
+  },
 }
 </script>
 
