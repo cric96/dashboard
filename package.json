@@ -22,7 +22,8 @@
     "@vue/cli-plugin-eslint": "5.0.8",
     "@vue/cli-service": "5.0.8",
     "eslint": "8.19.0",
-    "eslint-plugin-vue": "9.2.0"
+    "eslint-plugin-vue": "9.2.0",
+    "@vue-leaflet/vue-leaflet": "^0.6.1"
   },
   "eslintConfig": {
     "root": true,
