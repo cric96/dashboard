@@ -14,14 +14,16 @@
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <MarkerComponent
-        :lat="userCoords.latitude"
-        :lng="userCoords.longitude"
-        @open-sidebar="openSidebar"
-      />
+      <CollectionPointMarkers @open-sidebar="openSidebar" />
     </l-map>
   </div>
   <CollectionPointSidebar
+    v-if="cpMarkerClicked"
+    :side-visibility="sidebarVisible"
+    @closed="sidebarClosed"
+  />
+  <TruckSidebar
+    v-if="truckMarkerClicked"
     :side-visibility="sidebarVisible"
     @closed="sidebarClosed"
   />
@@ -34,12 +36,15 @@ import {
 
 import 'leaflet/dist/leaflet.css';
 import CollectionPointSidebar from '@/components/structure/CollectionPointSidebar';
-import MarkerComponent from '@/components/map/MarkerComponent';
+import TruckSidebar from '@/components/structure/TruckSidebar';
+import CollectionPointMarkers from '@/components/map/CollectionPointMarkers';
+
 
 export default {
 	name: 'MapComponent',
 	components: {
-		MarkerComponent,
+		CollectionPointMarkers,
+		TruckSidebar,
 		CollectionPointSidebar,
 		LMap,
 		LTileLayer,
@@ -53,6 +58,9 @@ export default {
 				longitude: 12.0412730,
 			},
 			sidebarVisible:false,
+			truckMarkerClicked:false,
+			cpMarkerClicked:false,
+
 		};
 	},
 	methods: {
@@ -61,17 +69,17 @@ export default {
 			this.map.scrollWheelZoom.disable();
 
 			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(p => this.userCoords = p.coords);
-				console.log(this.userCoords.latitude + '  ' + this.userCoords.longitude);
+				navigator.geolocation.watchPosition(p => this.userCoords = p.coords);
 				this.map.flyTo([this.userCoords.latitude, this.userCoords.longitude]);
-			} else {
-				console.log('Geolocation is not supported by this browser.');
 			}
 		},
-		openSidebar (){
+		openSidebar (marker){
+			console.log(marker);
+			this.cpMarkerClicked = true;
 			this.sidebarVisible = true;
 		},
 		sidebarClosed (){
+			this.cpMarkerClicked = false;
 			this.sidebarVisible = false;
 		},
 	},
