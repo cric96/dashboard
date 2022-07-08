@@ -19,13 +19,14 @@
     </l-map>
   </div>
   <CollectionPointSidebar
-    v-if="cpMarkerClicked"
+    v-if="collectionPointIsClicked"
     :side-visibility="sidebarVisible"
     @closed="sidebarClosed"
   />
   <TruckSidebar
-    v-if="truckMarkerClicked"
+    v-if="truckIsClicked"
     :side-visibility="sidebarVisible"
+    :truck-id="markerClicked"
     @closed="sidebarClosed"
   />
 </template>
@@ -61,10 +62,16 @@ export default {
 				longitude: 12.0412730,
 			},
 			sidebarVisible:false,
-			truckMarkerClicked:false,
-			cpMarkerClicked:false,
-
+			markerClicked:null,
 		};
+	},
+	computed:{
+		collectionPointIsClicked (){
+			return this.markerClicked != null && this.markerClicked.startsWith('cp');
+		},
+		truckIsClicked (){
+			return this.markerClicked != null && this.markerClicked.startsWith('T');
+		}
 	},
 	methods: {
 		mapIsReady (){
@@ -77,12 +84,10 @@ export default {
 			}
 		},
 		openSidebar (marker){
-			this.cpMarkerClicked = marker.id.startsWith('cp');
-			this.truckMarkerClicked = marker.id.startsWith('t');
+			this.markerClicked = marker;
 			this.sidebarVisible = true;
 		},
 		sidebarClosed (){
-			this.cpMarkerClicked = false;
 			this.sidebarVisible = false;
 		},
 	},

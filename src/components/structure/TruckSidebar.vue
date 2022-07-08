@@ -1,7 +1,7 @@
 <template>
   <Sidebar>
     <template #header>
-      <h1> Truck </h1>
+      <h1> Truck {{ truckId }} </h1>
       <p />
     </template>
 
@@ -20,6 +20,18 @@ export default {
 	components:{
 		Sidebar,
 	},
+	props:{
+		'truckId': {
+			type: String,
+			default:'10',
+		},
+	},
+	watch:{
+		truckId (o, n){
+			console.log(o);
+			console.log(n);
+		}
+	}
 };
 </script>
 
