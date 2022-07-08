@@ -1,11 +1,11 @@
 <template>
   <MarkerComponent
-    v-for="cp in collectionPoints"
-    :key="cp"
-    :lat="cp.lat"
-    :lng="cp.lng"
-    :icon="cpIcon"
-    @click="$emit('open-sidebar', cp)"
+    v-for="t in trucks"
+    :key="t"
+    :lat="t.lat"
+    :lng="t.lng"
+    :icon="tIcon"
+    @click="$emit('open-sidebar', t)"
   />
 </template>
 
@@ -21,9 +21,9 @@ export default {
 	emits: ['open-sidebar'],
 	data (){
 		return {
-			collectionPoints:[],
-			cpIcon: L.icon({
-				iconUrl: 'https://i.postimg.cc/WDjbgvLy/iconsBin.png',
+			trucks:[],
+			tIcon: L.icon({
+				iconUrl: 'https://i.postimg.cc/tCcLj6dL/garbage-truck.png',
 				iconSize:     [32, 32], // size of the icon
 			}),
 		};
@@ -32,11 +32,11 @@ export default {
 		for (let i = 0; i < 10; i++){
 			let lat = randomLatitude({min:44.14, max:44.20});
 			let lng = randomLongitude({min:12.24, max:12.30});
-			this.collectionPoints.push({
-				id:'cp-'+i,
+			this.trucks.push({
+				id:'t-'+i,
 				lat:lat,
 				lng: lng,
-				dumpsters:['1', '2', '3'],
+				id_mission:i,
 			});
 		}
 	}

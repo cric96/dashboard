@@ -15,6 +15,7 @@
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <CollectionPointMarkers @open-sidebar="openSidebar" />
+      <TruckMarkers @open-sidebar="openSidebar" />
     </l-map>
   </div>
   <CollectionPointSidebar
@@ -38,6 +39,7 @@ import 'leaflet/dist/leaflet.css';
 import CollectionPointSidebar from '@/components/structure/CollectionPointSidebar';
 import TruckSidebar from '@/components/structure/TruckSidebar';
 import CollectionPointMarkers from '@/components/map/CollectionPointMarkers';
+import TruckMarkers from '@/components/map/TruckMarkers';
 
 
 export default {
@@ -46,6 +48,7 @@ export default {
 		CollectionPointMarkers,
 		TruckSidebar,
 		CollectionPointSidebar,
+		TruckMarkers,
 		LMap,
 		LTileLayer,
 	},
@@ -74,8 +77,8 @@ export default {
 			}
 		},
 		openSidebar (marker){
-			console.log(marker);
-			this.cpMarkerClicked = true;
+			this.cpMarkerClicked = marker.id.startsWith('cp');
+			this.truckMarkerClicked = marker.id.startsWith('t');
 			this.sidebarVisible = true;
 		},
 		sidebarClosed (){
