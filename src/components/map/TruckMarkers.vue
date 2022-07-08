@@ -2,10 +2,10 @@
   <MarkerComponent
     v-for="t in trucks"
     :key="t"
-    :lat="t.lat"
-    :lng="t.lng"
+    :lat="t.position.latitude"
+    :lng="t.position.longitude"
     :icon="tIcon"
-    @click="$emit('open-sidebar', t)"
+    @click="$emit('open-sidebar', t.truckId)"
   />
 </template>
 
@@ -13,8 +13,11 @@
 import MarkerComponent from '@/components/map/MarkerComponent';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-const randomLatitude = require('random-latitude');
-const randomLongitude = require('random-longitude');
+//import axios from 'axios';
+import randomLatitude from 'random-latitude';
+import randomLongitude from 'random-longitude';
+// const randomLatitude = require('random-latitude');
+// const randomLongitude = require('random-longitude');
 export default {
 	name: 'CollectionPointMarkers',
 	components: {MarkerComponent},
@@ -29,17 +32,34 @@ export default {
 		};
 	},
 	mounted () {
+		// this.getTrucksInMission();
 		for (let i = 0; i < 10; i++){
 			let lat = randomLatitude({min:44.14, max:44.20});
 			let lng = randomLongitude({min:12.24, max:12.30});
 			this.trucks.push({
-				id:'t-'+i,
-				lat:lat,
-				lng: lng,
-				id_mission:i,
+				truckId:'T-'+i,
+				position : {
+					latitude:lat,
+					longitude: lng,
+
+				},
 			});
 		}
-	}
+	},
+	methods:{
+		// getTrucksInMission (){
+		// 	axios.get(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/inMission/', {
+		// 		headers: {
+		// 			'Access-Control-Allow-Origin': '*',
+		// 			'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+		// 			'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+		// 		}
+		// 	})
+		// 		.then(res => {
+		// 			res.data.forEach(t => this.trucks.push(t));
+		// 		});
+		// }
+	},
 };
 </script>
 

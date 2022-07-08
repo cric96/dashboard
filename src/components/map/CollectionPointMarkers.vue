@@ -5,7 +5,7 @@
     :lat="cp.lat"
     :lng="cp.lng"
     :icon="cpIcon"
-    @click="$emit('open-sidebar', cp)"
+    @click="$emit('open-sidebar', cp.id)"
   />
 </template>
 

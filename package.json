@@ -11,6 +11,8 @@
   "dependencies": {
     "core-js": "3.23.4",
     "vue": "3.2.37",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
     "primeflex": "^3.2.1",
     "primeicons": "^5.0.0",
     "primevue": "^3.15.0",
