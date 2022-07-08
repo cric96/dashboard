@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "prepare": "husky install"
   },
   "dependencies": {
     "core-js": "3.23.4",
@@ -23,7 +24,10 @@
     "@vue/cli-service": "5.0.8",
     "eslint": "8.19.0",
     "eslint-plugin-vue": "9.2.0",
-    "@vue-leaflet/vue-leaflet": "^0.6.1"
+    "@vue-leaflet/vue-leaflet": "^0.6.1",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "husky": "^8.0.1"
   },
   "eslintConfig": {
     "root": true,

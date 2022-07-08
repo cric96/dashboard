@@ -1,73 +1,80 @@
 <template>
   <div style="width: 80vw; height: 80vh;">
     <l-map
-        ref="map"
-        v-model="zoom"
-        v-model:zoom="zoom"
-        :max-zoom="18"
-        :min-zoom="5"
-        :zoom-animation="false"
-        :center="[this.userCoords.latitude, this.userCoords.longitude]"
-        @ready="mapIsReady"
-        :scrollZoom = "false"
+      ref="map"
+      v-model="zoom"
+      v-model:zoom="zoom"
+      :max-zoom="18"
+      :min-zoom="5"
+      :zoom-animation="false"
+      :center="[userCoords.latitude, userCoords.longitude]"
+      :scroll-zoom="false"
+      @ready="mapIsReady"
     >
       <l-tile-layer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      ></l-tile-layer>
-      <MarkerComponent :lat="userCoords.latitude" :lng="userCoords.longitude" @openSidebar="openSidebar"/>
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <MarkerComponent
+        :lat="userCoords.latitude"
+        :lng="userCoords.longitude"
+        @open-sidebar="openSidebar"
+      />
     </l-map>
   </div>
-  <CollectionPointSidebar :side-visibility=sidebarVisible @closed="sidebarClosed"></CollectionPointSidebar>
+  <CollectionPointSidebar
+    :side-visibility="sidebarVisible"
+    @closed="sidebarClosed"
+  />
 </template>
 <script>
 import {
-  LMap,
-  LTileLayer,
-} from "@vue-leaflet/vue-leaflet";
+	LMap,
+	LTileLayer,
+} from '@vue-leaflet/vue-leaflet';
 
-import "leaflet/dist/leaflet.css";
-import CollectionPointSidebar from "@/components/structure/CollectionPointSidebar";
-import MarkerComponent from "@/components/map/MarkerComponent";
+import 'leaflet/dist/leaflet.css';
+import CollectionPointSidebar from '@/components/structure/CollectionPointSidebar';
+import MarkerComponent from '@/components/map/MarkerComponent';
 
 export default {
-  name: "MapComponent",
-  components: {
-    MarkerComponent,
-    CollectionPointSidebar,
-    LMap,
-    LTileLayer,
-  },
-  data() {
-    return {
-      zoom: 13,
-      map:null,
-      userCoords:{
-        latitude: 44.2227278,
-        longitude: 12.0412730,
-      },
-      sidebarVisible:false,
-    };
-  },
-  methods: {
-    mapIsReady(){
-      this.map = this.$refs.map.leafletObject;
-      this.map.scrollWheelZoom.disable()
+	name: 'MapComponent',
+	components: {
+		MarkerComponent,
+		CollectionPointSidebar,
+		LMap,
+		LTileLayer,
+	},
+	data () {
+		return {
+			zoom: 13,
+			map:null,
+			userCoords:{
+				latitude: 44.2227278,
+				longitude: 12.0412730,
+			},
+			sidebarVisible:false,
+		};
+	},
+	methods: {
+		mapIsReady (){
+			this.map = this.$refs.map.leafletObject;
+			this.map.scrollWheelZoom.disable();
 
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(p => this.userCoords = p.coords);
-        console.log(this.userCoords.latitude + "  " + this.userCoords.longitude)
-        this.map.flyTo([this.userCoords.latitude, this.userCoords.longitude])
-      } else {
-        console.log("Geolocation is not supported by this browser.");
-      }
-    },
-    openSidebar(){
-      this.sidebarVisible = true;
-    },
-    sidebarClosed(){
-      this.sidebarVisible = false;
-    },
-  },
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(p => this.userCoords = p.coords);
+				console.log(this.userCoords.latitude + '  ' + this.userCoords.longitude);
+				this.map.flyTo([this.userCoords.latitude, this.userCoords.longitude]);
+			} else {
+				console.log('Geolocation is not supported by this browser.');
+			}
+		},
+		openSidebar (){
+			this.sidebarVisible = true;
+		},
+		sidebarClosed (){
+			this.sidebarVisible = false;
+		},
+	},
 };
 
 </script>

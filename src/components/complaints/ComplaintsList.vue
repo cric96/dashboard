@@ -1,11 +1,11 @@
 <template>
-complaints
+  complaints
 </template>
 
 <script>
 export default {
-  name: "ComplaintsList"
-}
+	name: 'ComplaintsList'
+};
 </script>
 
 <style scoped>
