@@ -1,11 +1,11 @@
 <template>
-Bookings
+  Bookings
 </template>
 
 <script>
 export default {
-  name: "BookingList"
-}
+	name: 'BookingList'
+};
 </script>
 
 <style scoped>

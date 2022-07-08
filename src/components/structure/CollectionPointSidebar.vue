@@ -2,7 +2,7 @@
   <Sidebar>
     <template #header>
       <h1> Collection Point </h1>
-      <p></p>
+      <p />
     </template>
 
     <template #content>
@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import Sidebar from "@/components/structure/Sidebar";
+import Sidebar from '@/components/structure/Sidebar';
 
 export default {
-  name: "CollectionPointSidebar",
-  components:{
-    Sidebar,
-  },
-}
+	name: 'CollectionPointSidebar',
+	components:{
+		Sidebar,
+	},
+};
 </script>
 
 <style scoped>

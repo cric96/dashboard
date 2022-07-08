@@ -1,11 +1,11 @@
 <template>
-MissionList
+  MissionList
 </template>
 
 <script>
 export default {
-name: "MissionsList"
-}
+	name: 'MissionsList'
+};
 </script>
 
 <style scoped>

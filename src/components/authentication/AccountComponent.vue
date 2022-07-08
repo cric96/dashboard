@@ -1,11 +1,11 @@
 <template>
-Account
+  Account
 </template>
 
 <script>
 export default {
-  name: "AccountComponent"
-}
+	name: 'AccountComponent'
+};
 </script>
 
 <style scoped>

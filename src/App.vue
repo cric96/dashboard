@@ -1,18 +1,18 @@
 <template>
-  <NavBar/>
+  <NavBar />
   <div class="flex justify-content-center my-5">
-    <router-view></router-view>
+    <router-view />
   </div>
 </template>
 
 <script>
-import NavBar from "@/components/structure/NavBar";
+import NavBar from '@/components/structure/NavBar';
 export default {
-  name: 'App',
-  components: {
-    NavBar,
-  }
-}
+	name: 'App',
+	components: {
+		NavBar,
+	}
+};
 </script>
 
 <style>
