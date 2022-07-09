@@ -69,7 +69,7 @@ export default {
 	},
 	computed:{
 		collectionPointIsClicked (){
-			return this.markerClicked != null && this.markerClicked.startsWith('cp');
+			return this.markerClicked != null && this.markerClicked.startsWith('C');
 		},
 		truckIsClicked (){
 			return this.markerClicked != null && this.markerClicked.startsWith('T');
