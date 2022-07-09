@@ -23,8 +23,12 @@ export default {
 	},
 	props: {
 		sideVisibility: Boolean,
+		itemId:{
+			type: String,
+			default: '-1',
+		}
 	},
-	emits: ['closed'],
+	emits: ['closed', 'itemUpdated'],
 	data (){
 		return {
 			visible:this.sideVisibility
@@ -34,12 +38,18 @@ export default {
 		sideVisibility (n){
 			this.visible = n;
 		},
+		itemId (n){
+			this.$emit('itemUpdated', n);
+		}
+	},
+	mounted () {
+		this.$emit('itemUpdated', this.itemId);
 	},
 	methods:{
 		hide (){
 			this.$emit('closed');
 		}
-	}
+	},
 };
 </script>
 

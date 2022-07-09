@@ -1,5 +1,5 @@
 <template>
-  <Sidebar>
+  <Sidebar @itemUpdated="updateCollectionPointId">
     <template #header>
       <h1> Collection Point {{ collectionPointId }} </h1>
       <p />
@@ -31,25 +31,11 @@ export default {
 		Sidebar,
 		DumpsterCard,
 	},
-	props:{
-		'collectionPointId': {
-			type: String,
-			default:'000',
-		},
-	},
 	data (){
 		return {
+			collectionPointId:null,
 			collectionPoint:null,
 		};
-	},
-	watch:{
-		collectionPointId (){
-			this.getCollectionPointById();
-		}
-	},
-	mounted () {
-		console.log('Collection Point showed' + this.collectionPointId);
-		this.getCollectionPointById();
 	},
 	methods:{
 		// getDumpsterById (){
@@ -66,7 +52,7 @@ export default {
 		// }
 		getCollectionPointById (){
 			this.collectionPoint = {
-				id:'Cp-1',
+				id:this.collectionPointId,
 				dumpsters:[
 					{
 						id:'D-1',
@@ -79,7 +65,11 @@ export default {
 					}
 				]
 			};
-		}
+		},
+		updateCollectionPointId (id){
+			this.collectionPointId = id;
+			this.getCollectionPointById();
+		},
 	},
 };
 </script>
