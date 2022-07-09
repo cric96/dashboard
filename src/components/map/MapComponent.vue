@@ -21,13 +21,13 @@
   <CollectionPointSidebar
     v-if="collectionPointIsClicked"
     :side-visibility="sidebarVisible"
-    :collection-point-id="markerClicked"
+    :item-id="markerClicked"
     @closed="sidebarClosed"
   />
   <TruckSidebar
     v-if="truckIsClicked"
     :side-visibility="sidebarVisible"
-    :truck-id="markerClicked"
+    :item-id="markerClicked"
     @closed="sidebarClosed"
   />
 </template>

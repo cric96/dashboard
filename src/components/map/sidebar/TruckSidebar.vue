@@ -1,5 +1,5 @@
 <template>
-  <Sidebar>
+  <Sidebar @itemUpdated="updateTruckId">
     <template #header>
       <h1> Truck {{ truckId }} </h1>
       <p />
@@ -20,26 +20,16 @@ export default {
 	components:{
 		Sidebar,
 	},
-	props:{
-		'truckId': {
-			type: String,
-			default:'000',
-		},
-	},
 	data (){
 		return {
+			truckId:null,
 			truck:null,
 		};
 	},
-	watch:{
-		truckId (n){
-			console.log(n);
-		}
-	},
-	mounted () {
-		console.log('Truck showed' + this.truckId);
-	},
 	methods:{
+		updateTruckId (id){
+			this.truckId = id;
+		}
 		// getTruckById (){
 		// 	axios.get(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/'+this.truckId, {
 		// 		headers: {
