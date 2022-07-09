@@ -37,8 +37,8 @@ import {
 } from '@vue-leaflet/vue-leaflet';
 
 import 'leaflet/dist/leaflet.css';
-import CollectionPointSidebar from '@/components/structure/CollectionPointSidebar';
-import TruckSidebar from '@/components/structure/TruckSidebar';
+import CollectionPointSidebar from '@/components/map/sidebar/CollectionPointSidebar';
+import TruckSidebar from '@/components/map/sidebar/TruckSidebar';
 import CollectionPointMarkers from '@/components/map/CollectionPointMarkers';
 import TruckMarkers from '@/components/map/TruckMarkers';
 
