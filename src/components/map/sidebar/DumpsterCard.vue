@@ -1,48 +1,48 @@
 <template>
-  <Card class="flex-grow-1 justify-content-between flex-wrap flex-row">
-    <template #title>
-      <h3 class="flex-grow-1">
+  <div class="flex flex-wrap align-content-start w-100">
+    <Card>
+      <template #title>
         {{ dumpster.id }}
-      </h3>
-    </template>
-    <template #subtitle>
-      <p>
-        Status: <Tag
-          :value="dumpsterStatusToValue"
-          :rounded="true"
-          :severity="dumpsterStatusToSeverity"
-        />
-      </p>
-    </template>
-    <template #content>
-      <div>
+        <Divider />
+      </template>
+      <template #content>
         <div>
-          Type of waste: <Tag
-            :value="dumpsterOrdinaryWaste.wasteName"
-            :rounded="true"
-            :style="cssDumpsterColor"
-          />
-        </div>
-        <div>
-          <ProgressBar :value="dumpsterOccupationPercentage">
-            {{ dumpsterOccupationPercentage }}%
+          <p>
+            Status: <Tag
+              :value="dumpsterStatusToValue"
+              :rounded="true"
+              :severity="dumpsterStatusToSeverity"
+            />
+          </p>
+          <div>
+            Type of waste: <Tag
+              :value="dumpsterOrdinaryWaste.wasteName"
+              :rounded="true"
+              :style="cssDumpsterColor"
+            />
+          </div>
+          <p>Occupied percentage:</p>
+          <ProgressBar :value="dumpsterOccupiedPercentage">
+            {{ dumpsterOccupiedPercentage }}%
           </ProgressBar>
         </div>
-      </div>
-    </template>
-  </Card>
+      </template>
+    </Card>
+  </div>
 </template>
 
 <script>
 import Card from 'primevue/card';
 import Tag from 'primevue/tag';
 import ProgressBar from 'primevue/progressbar';
+import Divider from 'primevue/divider';
 export default {
 	name: 'DCard',
 	components: {
 		Card,
 		Tag,
 		ProgressBar,
+		Divider,
 	},
 	props: {
 		'dumpster': {
@@ -57,7 +57,7 @@ export default {
 		dumpsterStatusToSeverity (){
 			return this.dumpster.available ? 'success': 'danger';
 		},
-		dumpsterOccupationPercentage (){
+		dumpsterOccupiedPercentage (){
 			return this.dumpster.occupiedVolume.value/this.dumpster.dumpsterType.size.capacity*100;
 		},
 		dumpsterOrdinaryWaste (){
@@ -73,9 +73,12 @@ export default {
 </script>
 
 <style scoped>
-.p-card .p-card-body {
-	padding: 1.25rem;
-	align-self: stretch;
-	flex: auto;
+.p-card, .p-card-body {
+	align-self: stretch !important;
+	flex: auto !important;
+}
+.p-card-content {
+	margin-top: 0 !important;
+	padding-top: 0 !important;
 }
 </style>
