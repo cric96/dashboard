@@ -34,7 +34,7 @@ export default {
 		Sidebar,
 		DumpsterCard,
 	},
-	data (){
+	data() {
 		return {
 			collectionPointId:null,
 			collectionPoint:null,
@@ -67,7 +67,7 @@ export default {
 		// 			res.data.forEach(d => this.dumpsters.push(d));
 		// 		});
 		// },
-		getCollectionPointById (){
+		getCollectionPointById() {
 			this.dumpsters = [
 				{
 					id: 'Dumpster2',
@@ -109,7 +109,7 @@ export default {
 				}
 			];
 		},
-		updateCollectionPointId (id){
+		updateCollectionPointId(id) {
 			this.collectionPointId = id;
 			this.dumpsters = [];
 			this.getCollectionPointById();

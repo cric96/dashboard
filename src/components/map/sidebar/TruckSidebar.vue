@@ -20,14 +20,14 @@ export default {
 	components:{
 		Sidebar,
 	},
-	data (){
+	data() {
 		return {
 			truckId:null,
 			truck:null,
 		};
 	},
 	methods:{
-		updateTruckId (id){
+		updateTruckId(id) {
 			this.truckId = id;
 		}
 		// getTruckById (){

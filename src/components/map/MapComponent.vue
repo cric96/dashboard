@@ -54,7 +54,7 @@ export default {
 		LMap,
 		LTileLayer,
 	},
-	data () {
+	data() {
 		return {
 			zoom: 13,
 			map:null,
@@ -68,21 +68,21 @@ export default {
 		};
 	},
 	computed:{
-		collectionPointIsClicked (){
+		collectionPointIsClicked() {
 			return this.markerClicked != null && this.markerClicked.startsWith('C');
 		},
-		truckIsClicked (){
+		truckIsClicked() {
 			return this.markerClicked != null && this.markerClicked.startsWith('T');
 		}
 	},
-	unmounted () {
+	unmounted() {
 		if (this.locationWatcher !== null)
 			navigator.geolocation.clearWatch(this.locationWatcher);
 	},
 	methods: {
-		mapIsReady (){
+		mapIsReady() {
 			this.map = this.$refs.map.leafletObject;
-			if (this.map !== null){
+			if (this.map !== null) {
 				this.map.scrollWheelZoom.disable();
 				if (navigator.geolocation) {
 					this.locationWatcher = navigator.geolocation.watchPosition(p => {
@@ -92,11 +92,11 @@ export default {
 				}
 			}
 		},
-		openSidebar (marker){
+		openSidebar(marker) {
 			this.markerClicked = marker;
 			this.sidebarVisible = true;
 		},
-		sidebarClosed (){
+		sidebarClosed() {
 			this.sidebarVisible = false;
 		},
 	}
