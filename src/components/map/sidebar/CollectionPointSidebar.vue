@@ -5,9 +5,17 @@
       <p />
     </template>
 
-    <template #content>
+    <template
+      v-if="collectionPoint!==null"
+      #content
+    >
       <div class="flex flex-column justify-content-evenly">
-        Prova
+        <DumpsterCard
+          v-for="d in collectionPoint.dumpsters"
+          :key="d"
+          class="flex align-items-center justify-content-center m-2"
+          :dumpster="d"
+        />
       </div>
     </template>
   </Sidebar>
@@ -15,11 +23,13 @@
 
 <script>
 import Sidebar from '@/components/map/sidebar/Sidebar';
+import DumpsterCard from '@/components/map/sidebar/DumpsterCard';
 
 export default {
 	name: 'CollectionPointSidebar',
 	components:{
 		Sidebar,
+		DumpsterCard,
 	},
 	props:{
 		'collectionPointId': {
@@ -33,15 +43,16 @@ export default {
 		};
 	},
 	watch:{
-		collectionPointId (n){
-			console.log(n);
+		collectionPointId (){
+			this.getCollectionPointById();
 		}
 	},
 	mounted () {
 		console.log('Collection Point showed' + this.collectionPointId);
+		this.getCollectionPointById();
 	},
 	methods:{
-		// getTruckById (){
+		// getDumpsterById (){
 		// 	axios.get(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/'+this.collectionPointId, {
 		// 		headers: {
 		// 			'Access-Control-Allow-Origin': '*',
@@ -53,6 +64,22 @@ export default {
 		// 			this.truck = res.data;
 		// 		});
 		// }
+		getCollectionPointById (){
+			this.collectionPoint = {
+				id:'Cp-1',
+				dumpsters:[
+					{
+						id:'D-1',
+					},
+					{
+						id:'D-2',
+					},
+					{
+						id:'D-3',
+					}
+				]
+			};
+		}
 	},
 };
 </script>

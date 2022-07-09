@@ -1,7 +1,7 @@
 <template>
   <Card>
     <template #title>
-      Dumpster id: {{ dumpster }}
+      Dumpster id: {{ dumpster.id }}
     </template>
     <template #content>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
@@ -14,12 +14,15 @@
 import Card from 'primevue/card';
 export default {
 	name: 'DCard',
-	components:{
+	components: {
 		Card,
 	},
-	props:[
-		'dumpster'
-	]
+	props: {
+		'dumpster': {
+			type: Object,
+			default: null,
+		}
+	}
 };
 </script>
 

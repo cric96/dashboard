@@ -21,6 +21,7 @@
   <CollectionPointSidebar
     v-if="collectionPointIsClicked"
     :side-visibility="sidebarVisible"
+    :collection-point-id="markerClicked"
     @closed="sidebarClosed"
   />
   <TruckSidebar
