@@ -16,8 +16,7 @@ import 'leaflet/dist/leaflet.css';
 //import axios from 'axios';
 import randomLatitude from 'random-latitude';
 import randomLongitude from 'random-longitude';
-// const randomLatitude = require('random-latitude');
-// const randomLongitude = require('random-longitude');
+
 export default {
 	name: 'CollectionPointMarkers',
 	components: {MarkerComponent},
