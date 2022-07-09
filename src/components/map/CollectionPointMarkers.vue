@@ -18,9 +18,9 @@ import randomLatitude from 'random-latitude';
 import randomLongitude from 'random-longitude';
 export default {
 	name: 'CollectionPointMarkers',
-	components: {MarkerComponent},
+	components: { MarkerComponent },
 	emits: ['open-sidebar'],
-	data (){
+	data() {
 		return {
 			collectionPoints:[],
 			cpIcon: L.icon({
@@ -29,10 +29,10 @@ export default {
 			}),
 		};
 	},
-	mounted () {
-		for (let i = 0; i < 4; i++){
-			let lat = randomLatitude({min:44.14, max:44.20});
-			let lng = randomLongitude({min:12.24, max:12.30});
+	mounted() {
+		for (let i = 0; i < 4; i++) {
+			let lat = randomLatitude({ min:44.14, max:44.20 });
+			let lng = randomLongitude({ min:12.24, max:12.30 });
 			this.collectionPoints.push({
 				id:'Cp-'+i,
 				position:{
@@ -44,7 +44,7 @@ export default {
 		//this.getCollectionPoints();
 	},
 	methods : {
-		getCollectionPoints (){
+		getCollectionPoints() {
 			axios.get(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/collectionpoints', {
 				headers: {
 					'Access-Control-Allow-Origin': '*',

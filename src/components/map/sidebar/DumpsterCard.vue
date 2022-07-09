@@ -51,19 +51,19 @@ export default {
 		}
 	},
 	computed:{
-		dumpsterStatusToValue (){
+		dumpsterStatusToValue() {
 			return this.dumpster.available ? 'available': 'not available';
 		},
-		dumpsterStatusToSeverity (){
+		dumpsterStatusToSeverity() {
 			return this.dumpster.available ? 'success': 'danger';
 		},
-		dumpsterOccupiedPercentage (){
+		dumpsterOccupiedPercentage() {
 			return this.dumpster.occupiedVolume.value/this.dumpster.dumpsterType.size.capacity*100;
 		},
-		dumpsterOrdinaryWaste (){
+		dumpsterOrdinaryWaste() {
 			return this.dumpster.dumpsterType.typeOfOrdinaryWaste;
 		},
-		cssDumpsterColor (){
+		cssDumpsterColor() {
 			return {
 				'background-color': this.dumpsterOrdinaryWaste.wasteColor.toLowerCase()
 			};

@@ -17,7 +17,7 @@ export default {
 	components: {
 		Menubar,
 	},
-	data () {
+	data() {
 		return {
 			items: [
 				{

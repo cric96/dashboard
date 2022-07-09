@@ -29,24 +29,24 @@ export default {
 		}
 	},
 	emits: ['closed', 'itemUpdated'],
-	data (){
+	data() {
 		return {
 			visible:this.sideVisibility
 		};
 	},
 	watch: {
-		sideVisibility (n){
+		sideVisibility(n) {
 			this.visible = n;
 		},
-		itemId (n){
+		itemId(n) {
 			this.$emit('itemUpdated', n);
 		}
 	},
-	mounted () {
+	mounted() {
 		this.$emit('itemUpdated', this.itemId);
 	},
 	methods:{
-		hide (){
+		hide() {
 			this.$emit('closed');
 		}
 	},

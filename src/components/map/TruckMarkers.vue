@@ -19,9 +19,9 @@ import randomLongitude from 'random-longitude';
 
 export default {
 	name: 'CollectionPointMarkers',
-	components: {MarkerComponent},
+	components: { MarkerComponent },
 	emits: ['open-sidebar'],
-	data (){
+	data() {
 		return {
 			trucks:[],
 			tIcon: L.icon({
@@ -30,11 +30,11 @@ export default {
 			}),
 		};
 	},
-	mounted () {
+	mounted() {
 		// this.getTrucksInMission();
-		for (let i = 0; i < 10; i++){
-			let lat = randomLatitude({min:44.14, max:44.20});
-			let lng = randomLongitude({min:12.24, max:12.30});
+		for (let i = 0; i < 10; i++) {
+			let lat = randomLatitude({ min:44.14, max:44.20 });
+			let lng = randomLongitude({ min:12.24, max:12.30 });
 			this.trucks.push({
 				truckId:'T-'+i,
 				position : {

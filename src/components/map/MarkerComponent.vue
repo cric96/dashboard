@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import {LMarker} from '@vue-leaflet/vue-leaflet';
+import { LMarker } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
 export default {
 	name: 'MarkerComponent',
