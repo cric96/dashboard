@@ -56,12 +56,15 @@ export default {
 				dumpsters:[
 					{
 						id:'D-1',
+						status:'working',
 					},
 					{
 						id:'D-2',
+						status:'working',
 					},
 					{
 						id:'D-3',
+						status:'not-working',
 					}
 				]
 			};
