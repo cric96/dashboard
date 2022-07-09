@@ -63,6 +63,7 @@ export default {
 			},
 			sidebarVisible:false,
 			markerClicked:null,
+			locationWatcher:null,
 		};
 	},
 	computed:{
@@ -73,14 +74,21 @@ export default {
 			return this.markerClicked != null && this.markerClicked.startsWith('T');
 		}
 	},
+	unmounted () {
+		if (this.locationWatcher !== null)
+			navigator.geolocation.clearWatch(this.locationWatcher);
+	},
 	methods: {
 		mapIsReady (){
 			this.map = this.$refs.map.leafletObject;
-			this.map.scrollWheelZoom.disable();
-
-			if (navigator.geolocation) {
-				navigator.geolocation.watchPosition(p => this.userCoords = p.coords);
-				this.map.flyTo([this.userCoords.latitude, this.userCoords.longitude]);
+			if (this.map !== null){
+				this.map.scrollWheelZoom.disable();
+				if (navigator.geolocation) {
+					this.locationWatcher = navigator.geolocation.watchPosition(p => {
+						this.userCoords = p.coords;
+						this.map.flyTo([this.userCoords.latitude, this.userCoords.longitude]);
+					});
+				}
 			}
 		},
 		openSidebar (marker){
@@ -90,7 +98,7 @@ export default {
 		sidebarClosed (){
 			this.sidebarVisible = false;
 		},
-	},
+	}
 };
 
 </script>
