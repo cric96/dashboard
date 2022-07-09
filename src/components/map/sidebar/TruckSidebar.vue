@@ -1,5 +1,5 @@
 <template>
-  <Sidebar @itemUpdated="updateTruckId">
+  <Sidebar @item-updated="updateTruckId">
     <template #header>
       <h1> Truck {{ truckId }} </h1>
       <p />

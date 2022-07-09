@@ -1,5 +1,5 @@
 <template>
-  <Sidebar @itemUpdated="updateCollectionPointId">
+  <Sidebar @item-updated="updateCollectionPointId">
     <template #header>
       <h1> Collection Point {{ collectionPointId }} </h1>
       <p />
