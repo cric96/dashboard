@@ -6,9 +6,7 @@
     </template>
 
     <template #content>
-      <div class="flex flex-column justify-content-evenly">
-        Prova
-      </div>
+      <div class="flex flex-column justify-content-evenly" />
     </template>
   </Sidebar>
 </template>
