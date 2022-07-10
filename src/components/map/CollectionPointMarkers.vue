@@ -30,7 +30,7 @@ export default {
 		};
 	},
 	mounted() {
-		for (let i = 0; i < 4; i++) {
+		for (let i = 0; i < 6; i++) {
 			let lat = randomLatitude({ min:44.14, max:44.20 });
 			let lng = randomLongitude({ min:12.24, max:12.30 });
 			this.collectionPoints.push({
