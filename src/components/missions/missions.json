@@ -1,0 +1,91 @@
+{
+  "missions": [
+    {
+      "id": "1",
+      "date": "01-07-2022",
+      "typeOfWaste": "ORGANIC",
+      "typeOfMission": "ORDINARY",
+      "completed": "false",
+      "truck": "123",
+      "steps": [
+        {
+          "collectionPoint": "1",
+          "completed": "false"
+        },
+        {
+          "collectionPoint": "2",
+          "completed": "false"
+        },
+        {
+          "collectionPoint": "3",
+          "completed": "true"
+        },
+        {
+          "collectionPoint": "4",
+          "completed": "true"
+        },{
+          "collectionPoint": "5",
+          "completed": "true"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "date": "01-07-2022",
+      "typeOfWaste": "PAPER",
+      "typeOfMission": "ORDINARY",
+      "completed": "true",
+      "truck": "456",
+      "steps": [
+        {
+          "collectionPoint": "1",
+          "completed": "true"
+        },
+        {
+          "collectionPoint": "2",
+          "completed": "true"
+        },
+        {
+          "collectionPoint": "3",
+          "completed": "true"
+        },
+        {
+          "collectionPoint": "4",
+          "completed": "true"
+        },{
+          "collectionPoint": "5",
+          "completed": "true"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "date": "01-07-2022",
+      "typeOfWaste": "TWIGS",
+      "typeOfMission": "EXTRAORDINARY",
+      "completed": "false",
+      "truck": "789",
+      "steps": [
+        {
+          "home": "1",
+          "completed": "false"
+        },
+        {
+          "home": "2",
+          "completed": "false"
+        },
+        {
+          "home": "3",
+          "completed": "true"
+        },
+        {
+          "home": "4",
+          "completed": "true"
+        },{
+          "home": "5",
+          "completed": "true"
+        }
+      ]
+    }
+  ]
+}
