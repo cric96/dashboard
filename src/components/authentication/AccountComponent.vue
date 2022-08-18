@@ -42,16 +42,16 @@ export default {
 		};
 	},
 	created() {
-		const sessionID = localStorage.getItem('sessionID');
-		console.log('Session: ', sessionID);
-		if (sessionID) {
+		const sessionId = localStorage.getItem('sessionId');
+		console.log('Session: ', sessionId);
+		if (sessionId) {
 			this.connected = true;
-			this.socket.auth = { sessionID };
+			this.socket.auth = { sessionId };
 			this.socket.connect();
-			this.socket.on('session', ({ sessionID, userId }) => {
+			this.socket.on('session', ({ sessionId, userId }) => {
 				this.userId = userId;
 				console.log('UserId: ', userId);
-				console.log('Session: ', sessionID);
+				console.log('Session: ', sessionId);
 			});
 			this.receiveNotification();
 		}
@@ -62,10 +62,10 @@ export default {
 			this.socket.auth = { userId };
 			console.log('connection');
 			this.socket.connect();
-			this.socket.on('session', ({ sessionID, userId }) => {
-				this.socket.auth = { sessionID };
-				localStorage.setItem('sessionID', sessionID);
-				console.log('SessionId: ', sessionID);
+			this.socket.on('session', ({ sessionId, userId }) => {
+				this.socket.auth = { sessionId };
+				localStorage.setItem('sessionId', sessionId);
+				console.log('sessionId: ', sessionId);
 				this.userId = userId;
 				console.log('UserId: ', userId);
 			});

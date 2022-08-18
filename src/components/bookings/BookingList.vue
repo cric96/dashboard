@@ -3,17 +3,27 @@
     <DataView
       :value="bookings"
       layout="grid"
-      :paginator="true"
+      :paginator="bookings.length > 9"
       :rows="9"
-      class="w-full"
+      class="p-5"
     >
       <template #grid="slotProps">
         <div class="col-12 md:col-4">
           <Card
-            style="margin: 20px 10px"
+            style="margin: 30px 30px"
           >
             <template #title>
-              Prova {{ slotProps.id }}
+              <p>At Home Collection Booking</p>
+            </template>
+            <template #subtitle>
+              ID: {{ slotProps.data._id }}
+            </template>
+            <template #content>
+              <ul style="list-style-type:none;">
+                <li> Status: {{ slotProps.data.status }} </li>
+                <li> Waste Type: {{ slotProps.data.typeOfWaste.wasteName }} </li>
+              </ul>
+              <p>MADE ON {{ printPrettyDate(slotProps.data.datetime) }}</p>
             </template>
           </Card>
         </div>
@@ -37,7 +47,8 @@
 import Button from 'primevue/button';
 import DataView from 'primevue/dataview';
 import Card from 'primevue/card';
-//import axios from 'axios';
+import axios from 'axios';
+import moment from 'moment';
 export default {
 	name: 'BookingList',
 	components:{
@@ -51,7 +62,13 @@ export default {
 		};
 	},
 	created() {
+		axios.get('http://localhost:3000/bookings/user/123').then(res => this.bookings = res.data.reverse());
 	},
+	methods: {
+		printPrettyDate(d) {
+			return moment(d).format('DD MMMM YYYY');
+		}
+	}
 };
 </script>
 
