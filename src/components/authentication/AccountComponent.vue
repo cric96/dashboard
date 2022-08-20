@@ -1,34 +1,51 @@
 <template>
-  <p>Logged User: {{ userId }}</p>
-  <span
+  <Card
     v-if="userId==='' || !connected"
-    class="p-float-label"
+    class="w-full"
   >
-    <InputText
-      id="userId"
-      v-model="userId"
-      type="text"
-    />
-    <label for="userId">UserId</label>
-  </span>
-  <Button
-    v-if="userId !== '' && !connected"
-    @click="connectSocket"
-  >
-    Connect
-  </Button>
+    <template #content>
+      <div class="grid">
+        <div class="col-5 flex align-items-center justify-content-center">
+          <LoginForm />
+        </div>
+        <div class="col-2">
+          <Divider layout="vertical">
+            <b>OR</b>
+          </Divider>
+        </div>
+        <div class="col-5 flex align-items-center justify-content-center">
+          <router-link
+            v-slot="{href, navigate}"
+            :to="'/dashboard/account/registration'"
+          >
+            <Button
+              :href="href"
+              label="Sign Up"
+              icon="pi pi-user-plus"
+              class="p-button-success"
+              @click="navigate"
+            />
+          </router-link>
+        </div>
+      </div>
+    </template>
+  </Card>
 </template>
 
 <script>
 import { io } from 'socket.io-client';
 import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
 import { useNotificationStore } from '@/components/stores/NotificationStore';
+import Divider from 'primevue/divider';
+import Card from 'primevue/card';
+import LoginForm from '@/components/authentication/LoginForm';
 export default {
 	name: 'AccountComponent',
 	components:{
+		LoginForm,
 		Button,
-		InputText,
+		Divider,
+		Card,
 	},
 	setup() {
 		const notStore = useNotificationStore();
@@ -74,7 +91,7 @@ export default {
     
 		receiveNotification() {
 			this.socket.on('assigned', (res) => {
-				this.$toast.add({ severity:'success', summary: 'Success Message', detail:'Order submitted', life: 3000 });
+				this.$toast.add({ severity:'success', summary: 'News about your booking', detail:'The status of one of your At Home Collection booking is changed ', life: 3000 });
 				res.isRead = false;
 				this.notStore.addNotification(res);
 			});
@@ -84,5 +101,5 @@ export default {
 </script>
 
 <style scoped>
-
+a { text-decoration: none; }
 </style>

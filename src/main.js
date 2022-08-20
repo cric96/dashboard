@@ -17,6 +17,7 @@ import AccountComponent from '@/components/authentication/AccountComponent';
 import MissionDetails from '@/components/missions/MissionDetails';
 import BookingList from '@/components/bookings/BookingList';
 import BookingForm from '@/components/bookings/BookingForm';
+import RegistrationForm from '@/components/authentication/RegistrationForm';
 
 const routes = [
 	{
@@ -59,6 +60,11 @@ const routes = [
 		path: '/dashboard/account',
 		name: 'Account',
 		component: AccountComponent,
+	},
+	{
+		path: '/dashboard/account/registration',
+		name: 'Registration Form',
+		component: RegistrationForm,
 	},
 
 ];
