@@ -1,6 +1,6 @@
 <template>
   <Card
-    v-if="userId==='' || !connected"
+    v-if="!userStore.isLogged"
     class="w-full"
   >
     <template #content>
@@ -30,15 +30,25 @@
       </div>
     </template>
   </Card>
+  <Card v-if="userStore.isLogged">
+    <template #title>
+      {{ userStore.getUserName }}
+    </template>
+    <template #footer>
+      <Button @click="logout()">
+        Logout
+      </Button>
+    </template>
+  </Card>
 </template>
 
 <script>
-import { io } from 'socket.io-client';
 import Button from 'primevue/button';
-import { useNotificationStore } from '@/components/stores/NotificationStore';
 import Divider from 'primevue/divider';
 import Card from 'primevue/card';
 import LoginForm from '@/components/authentication/LoginForm';
+import { useUserStore } from '@/components/stores/UserStore';
+import { useSocketStore } from '@/components/stores/SocketStore';
 export default {
 	name: 'AccountComponent',
 	components:{
@@ -48,53 +58,26 @@ export default {
 		Card,
 	},
 	setup() {
-		const notStore = useNotificationStore();
-		return { notStore };
+		const userStore = useUserStore();
+		const socketStore = useSocketStore();
+		return { userStore, socketStore };
 	},
 	data() {
 		return {
-			userId:'',
-			connected:false,
-			socket:io('http://localhost:3000', { autoConnect:false }),
+
 		};
 	},
 	created() {
-		const sessionId = localStorage.getItem('sessionId');
-		console.log('Session: ', sessionId);
-		if (sessionId) {
-			this.connected = true;
-			this.socket.auth = { sessionId };
-			this.socket.connect();
-			this.socket.on('session', ({ sessionId, userId }) => {
-				this.userId = userId;
-				console.log('UserId: ', userId);
-				console.log('Session: ', sessionId);
-			});
-			this.receiveNotification();
+		if (this.socketStore.sessionId !== '' && this.userStore.isLogged) {
+			this.socketStore.reconnect();
+		} else {
+			console.log('User not connected ' + this.socketStore.sessionId + '  ' + this.userStore.isLogged);
 		}
 	},
 	methods:{
-		connectSocket() {
-			this.connected = true;
-			this.socket.auth = { userId };
-			console.log('connection');
-			this.socket.connect();
-			this.socket.on('session', ({ sessionId, userId }) => {
-				this.socket.auth = { sessionId };
-				localStorage.setItem('sessionId', sessionId);
-				console.log('sessionId: ', sessionId);
-				this.userId = userId;
-				console.log('UserId: ', userId);
-			});
-			this.receiveNotification();
-		},
-    
-		receiveNotification() {
-			this.socket.on('assigned', (res) => {
-				this.$toast.add({ severity:'success', summary: 'News about your booking', detail:'The status of one of your At Home Collection booking is changed ', life: 3000 });
-				res.isRead = false;
-				this.notStore.addNotification(res);
-			});
+		logout() {
+			this.userStore.logout();
+			this.socketStore.disconnect();
 		}
 	}
 };

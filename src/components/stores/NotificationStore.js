@@ -14,12 +14,10 @@ export const useNotificationStore = defineStore('notification', {
 		fetchNotifications() {
 
 		},
-
 		addNotification(n) {
 			console.log('adding: ' + n);
 			this.notifications.push(n);
 			console.log(this.notifications);
-
 		}
 	},
 	persist:true

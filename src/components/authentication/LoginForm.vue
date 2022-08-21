@@ -48,6 +48,8 @@ import { required, email } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import axios from 'axios';
 import Password from 'primevue/password';
+import { useUserStore } from '@/components/stores/UserStore';
+import { useSocketStore } from '@/components/stores/SocketStore';
 
 export default {
 	name: 'LoginForm',
@@ -56,7 +58,11 @@ export default {
 		Button,
 		Password
 	},
-	setup: () => ({ v$: useVuelidate() }),
+	setup() {
+		const userStore = useUserStore();
+		const socketStore = useSocketStore();
+		return { v$: useVuelidate(), userStore, socketStore };
+	},
 	data() {
 		return {
 			email:'',
@@ -88,6 +94,8 @@ export default {
 					.then(response => {
 						if (response.status === 200) {
 							console.log(response.data);
+							this.userStore.login(response.data.user);
+							this.socketStore.connect(this.userStore.userId);
 						} else if (response.status === 401) {
 							console.log(response.data);
 						}
