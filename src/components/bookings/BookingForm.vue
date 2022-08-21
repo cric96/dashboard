@@ -127,6 +127,7 @@ import Card from 'primevue/card';
 import InputText from 'primevue/inputtext';
 import axios from 'axios';
 import Dialog from 'primevue/dialog';
+import { useUserStore } from '@/components/stores/UserStore';
 
 export default {
 	name: 'BookingForm',
@@ -137,7 +138,10 @@ export default {
 		InputText,
 		Dialog,
 	},
-	setup: () => ({ v$: useVuelidate() }),
+	setup() {
+		const userStore = useUserStore();
+		return { v$: useVuelidate(), userStore };
+	},
 	data() {
 		return {
 			waste:null,
@@ -178,7 +182,7 @@ export default {
 			if (isFormValid) {
 				console.log(this.waste);
 				let booking = {
-					userId: '123',
+					userId: this.userStore.userId,
 					typeOfWaste: {
 						wasteName: this.waste.name
 					},

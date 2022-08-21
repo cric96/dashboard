@@ -49,6 +49,7 @@ import DataView from 'primevue/dataview';
 import Card from 'primevue/card';
 import axios from 'axios';
 import moment from 'moment';
+import { useUserStore } from '@/components/stores/UserStore';
 export default {
 	name: 'BookingList',
 	components:{
@@ -56,13 +57,17 @@ export default {
 		DataView,
 		Card,
 	},
+	setup() {
+		const userStore = useUserStore();
+		return { userStore };
+	},
 	data() {
 		return {
 			bookings:[],
 		};
 	},
 	created() {
-		axios.get('http://localhost:3000/bookings/user/123').then(res => this.bookings = res.data.reverse());
+		axios.get('http://localhost:3000/bookings/user/' + this.userStore.userId).then(res => this.bookings = res.data.reverse());
 	},
 	methods: {
 		printPrettyDate(d) {
