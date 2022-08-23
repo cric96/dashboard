@@ -6,12 +6,12 @@
     <div class="field">
       <label
         for="email"
-        :class="{'p-error':v$.email.$invalid && submitted}"
+        :class="{'p-error':(v$.email.$invalid && submitted)}"
       >Email</label>
       <InputText
         id="email"
         v-model="v$.email.$model"
-        :class="{'p-invalid':v$.email.$invalid && submitted}"
+        :class="{'p-invalid':(v$.email.$invalid && submitted)}"
         type="text"
       />
       <small
@@ -22,17 +22,22 @@
     <div class="field">
       <label
         for="password"
-        :class="{'p-error':v$.password.$invalid && submitted}"
+        :class="{'p-error':(v$.password.$invalid && submitted)}"
       >Password</label>
       <Password
         id="password"
         v-model="password"
+        :class="{'p-error':(v$.password.$invalid && submitted)}"
         :feedback="false"
       />
       <small
         v-if="(v$.password.$invalid && submitted) || v$.password.$pending.$response"
         class="p-error"
       >{{ v$.password.required.$message.replace('Value', 'Password') }}</small>
+      <small
+        v-if="error"
+        class="p-error"
+      >Username or Password are incorrect</small>
     </div>
     <Button
       type="submit"
@@ -68,6 +73,7 @@ export default {
 			email:'',
 			password:'',
 			submitted:null,
+			error:false,
 		};
 	},
 	validations() {
@@ -96,9 +102,13 @@ export default {
 							console.log(response.data);
 							this.userStore.login(response.data.user);
 							this.socketStore.connect(this.userStore.userId);
-						} else if (response.status === 401) {
-							console.log(response.data);
 						}
+					}).catch( error => {
+						console.log('ERROR: ' + error);
+						console.log('account non trovato');
+						this.password='';
+						this.submitted = false;
+						this.error = true;
 					});
 			}
 		},
