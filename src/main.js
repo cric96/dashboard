@@ -19,6 +19,7 @@ import BookingList from '@/components/bookings/BookingList';
 import BookingForm from '@/components/bookings/BookingForm';
 import RegistrationForm from '@/components/authentication/RegistrationForm';
 import { useUserStore } from '@/components/stores/UserStore';
+import ComplaintForm from '@/components/complaints/ComplaintForm';
 
 const routes = [
 	{
@@ -46,6 +47,11 @@ const routes = [
 		path: '/dashboard/complaints',
 		name: 'Complaints',
 		component: ComplaintsList,
+	},
+	{
+		path: '/dashboard/complaints/new',
+		name: 'Complaint Form',
+		component: ComplaintForm,
 	},
 	{
 		path: '/dashboard/bookings',

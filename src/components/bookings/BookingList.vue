@@ -30,6 +30,7 @@
       </template>
     </DataView>
     <router-link
+      v-if="userStore.isCitizen"
       v-slot="{href, navigate}"
       :to="'/dashboard/bookings/new'"
     >
@@ -67,7 +68,11 @@ export default {
 		};
 	},
 	created() {
-		axios.get('http://localhost:3000/bookings/user/' + this.userStore.userId).then(res => this.bookings = res.data.reverse());
+		if (this.userStore.isCitizen)
+			axios.get('http://localhost:3000/bookings/user/' + this.userStore.userId).then(res => this.bookings = res.data.reverse());
+		else if (this.userStore.isManager)
+			axios.get('http://localhost:3000/bookings/').then(res => this.bookings = res.data.reverse());
+
 	},
 	methods: {
 		printPrettyDate(d) {

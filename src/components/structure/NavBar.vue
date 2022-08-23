@@ -86,7 +86,7 @@ export default {
 				{
 					label: 'Complaints',
 					to:'/dashboard/complaints',
-					role:['MANAGER']
+					role:['MANAGER', 'CITIZEN']
 				},
 				{
 					label: 'Bookings',
@@ -105,10 +105,6 @@ export default {
 		toggleOP(event) {
 			this.$refs.op.toggle(event);
 		},
-    
-		checkUserIsLoggedOrRedirect() {
-			return !this.userStore.isLogged ? { name: 'Account' } : false;
-		}
 	}
 };
 </script>

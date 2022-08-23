@@ -15,6 +15,14 @@ export const useUserStore = defineStore('user', {
 
 		isLogged: (state) => {
 			return state.userId !== '';
+		},
+
+		isCitizen: (state) => {
+			return state.role === 'CITIZEN';
+		},
+
+		isManager: (state) => {
+			return state.role === 'MANAGER';
 		}
 	},
 	actions:{
