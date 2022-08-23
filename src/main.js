@@ -18,6 +18,7 @@ import MissionDetails from '@/components/missions/MissionDetails';
 import BookingList from '@/components/bookings/BookingList';
 import BookingForm from '@/components/bookings/BookingForm';
 import RegistrationForm from '@/components/authentication/RegistrationForm';
+import { useUserStore } from '@/components/stores/UserStore';
 
 const routes = [
 	{
@@ -72,6 +73,17 @@ const routes = [
 const router = createRouter({
 	history: createWebHistory(),
 	routes,
+});
+
+router.beforeEach((to) => {
+	const userStore = useUserStore();
+	if (to.name !== 'Account' &&
+		to.name !== 'Map' &&
+		to.name !== '' &&
+		to.name !== 'Registration Form' &&
+		!userStore.isLogged) {
+		return '/dashboard/account';
+	}
 });
 
 const pinia = createPinia();

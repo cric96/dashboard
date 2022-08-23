@@ -7,9 +7,25 @@
       <template #start>
         SWC
       </template>
+      <template #item="{item}">
+        <router-link
+          v-if="item.role.includes(userStore.role)"
+          v-slot="{href, navigate}"
+          :to="item.to"
+        >
+          <Button
+            class="p-button-text"
+            :href="href"
+            @click="navigate"
+          >
+            {{ item.label }}
+          </Button>
+        </router-link>
+      </template>
       <template #end>
         <span class="p-button-set">
           <Button
+            v-if="userStore.isLogged"
             icon="pi pi-bell"
             class="p-button-text p-button-rounded"
             :badge="notificationsBadge"
@@ -40,6 +56,7 @@ import Button from 'primevue/button';
 import OverlayPanel from 'primevue/overlaypanel';
 import NotificationsPanel from '@/components/structure/NotificationsPanel';
 import { useNotificationStore } from '@/components/stores/NotificationStore';
+import { useUserStore } from '@/components/stores/UserStore';
 export default {
 	name: 'NavBar',
 	components: {
@@ -50,26 +67,31 @@ export default {
 	},
 	setup() {
 		const notStore = useNotificationStore();
-		return { notStore };
+		const userStore = useUserStore();
+		return { notStore, userStore };
 	},
 	data() {
 		return {
 			items: [
 				{
 					label: 'Map',
-					to:'/dashboard/map'
+					to:'/dashboard/map',
+					role:['','CITIZEN', 'MANAGER']
 				},
 				{
 					label: 'Missions',
-					to:'/dashboard/missions'
+					to:'/dashboard/missions',
+					role:['MANAGER'],
 				},
 				{
 					label: 'Complaints',
-					to:'/dashboard/complaints'
+					to:'/dashboard/complaints',
+					role:['MANAGER']
 				},
 				{
 					label: 'Bookings',
-					to:'/dashboard/bookings'
+					to:'/dashboard/bookings',
+					role:['CITIZEN', 'MANAGER']
 				},
 			],
 		};
@@ -82,6 +104,10 @@ export default {
 	methods:{
 		toggleOP(event) {
 			this.$refs.op.toggle(event);
+		},
+    
+		checkUserIsLoggedOrRedirect() {
+			return !this.userStore.isLogged ? { name: 'Account' } : false;
 		}
 	}
 };
