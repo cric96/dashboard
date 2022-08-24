@@ -52,6 +52,7 @@
     </div>
     <Divider />
     <Button
+      v-if="statusFilters.length > 0 || issuers.length > 0"
       class="p-button-sm"
       @click="$emit('filters', {statusFilters, issuers})"
     >
@@ -73,6 +74,13 @@ export default {
 		Divider,
 		Button
 	},
+	props:{
+		'filters': {
+			type:Object,
+			require:true,
+			default:null
+		}
+	},
 	emits: ['filters'],
 	setup() {
 		const userStore = useUserStore();
@@ -80,8 +88,8 @@ export default {
 	},
 	data() {
 		return {
-			statusFilters:[],
-			issuers:[],
+			statusFilters:this.filters.statusFilters,
+			issuers:this.filters.issuers,
 		};
 	}
 };

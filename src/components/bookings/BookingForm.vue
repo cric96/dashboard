@@ -180,7 +180,6 @@ export default {
 		handleSubmit(isFormValid) {
 			this.submitted = true;
 			if (isFormValid) {
-				console.log(this.waste);
 				let booking = {
 					userId: this.userStore.userId,
 					typeOfWaste: {

@@ -3,7 +3,7 @@
     <DataView
       :value="filteredComplaints"
       layout="grid"
-      :paginator="filteredComplaints.length > 9"
+      :paginator="true"
       :rows="9"
       class="p-5 w-screen"
     >
@@ -16,13 +16,19 @@
           />
         </div>
         <OverlayPanel ref="fop">
-          <ComplaintFilterPanel @filters="applyFilters" />
+          <ComplaintFilterPanel
+            :filters="filters"
+            @filters="applyFilters"
+          />
         </OverlayPanel>
       </template>
       <template #grid="slotProps">
-        <div class="col-12 md:col-4">
+        <div
+          class="col-12 md:col-4"
+          style="background-color: #EFF3F8"
+        >
           <Card
-            style="margin: 30px 30px"
+            style="margin: 30px 30px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
           >
             <template #title>
               <p style="text-transform: capitalize">
@@ -97,21 +103,14 @@ export default {
 	data() {
 		return {
 			complaints:[],
-			filters:null,
+			filters: { statusFilters:[], issuers: [] },
 		};
 	},
 	computed:{
 		filteredComplaints() {
-			let filtered = this.complaints;
-			if (this.filters !== null) {
-				if (this.filters.statusFilters.length > 0) {
-					filtered = filtered.filter(c => this.filters.statusFilters.includes(c.status));
-				}
-				if (this.filters.issuers.length > 0) {
-					filtered = filtered.filter(c => this.filters.issuers.includes(c.status));
-				}
-			}
-			return filtered;
+			return this.complaints
+				.filter(c => this.filters.statusFilters.length === 0 || this.filters.statusFilters.includes(c.status))
+				.filter(c => this.filters.issuers.length === 0 || this.filters.issuers.includes(c.issuer));
 		}
 	},
 	created() {
@@ -127,6 +126,7 @@ export default {
 	methods: {
 		applyFilters(f) {
 			this.filters = f;
+			this.$refs.fop.hide();
 		}
 	}
 };
@@ -145,5 +145,11 @@ a { text-decoration: none; }
   color: #CF222E;
   font-weight: bold;
   padding: 1px 5px;
+}
+::v-deep(.grid-nogutter){
+  background-color: #EFF3F8;
+}
+::v-deep(.p-paginator){
+  background-color: #f8f9fa;
 }
 </style>
