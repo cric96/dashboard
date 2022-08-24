@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="flex flex-column w-full">
     <DataView
       :value="filteredComplaints"
       layout="grid"
       :paginator="true"
       :rows="9"
-      class="p-5 w-screen"
+      class="m-5"
     >
       <template #header>
         <div style="text-align: right">

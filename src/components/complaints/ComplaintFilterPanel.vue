@@ -52,7 +52,6 @@
     </div>
     <Divider />
     <Button
-      v-if="statusFilters.length > 0 || issuers.length > 0"
       class="p-button-sm"
       @click="$emit('filters', {statusFilters, issuers})"
     >

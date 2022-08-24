@@ -60,6 +60,9 @@
               <Textarea
                 id="message"
                 v-model="v$.message.$model"
+                :auto-resize="true"
+                rows="5"
+                cols="30"
                 :class="{'p-invalid':v$.message.$invalid && submitted}"
               />
               <label

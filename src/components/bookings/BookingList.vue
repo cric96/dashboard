@@ -1,11 +1,14 @@
 <template>
-  <div>
+  <div
+    class="flex flex-column w-full"
+    style="text-align: center"
+  >
     <DataView
       :value="filteredBookings"
       layout="grid"
       :paginator="true"
       :rows="9"
-      class="p-5 w-screen"
+      class="m-5"
     >
       <template #header>
         <div style="text-align: right">
@@ -24,11 +27,12 @@
       </template>
       <template #grid="slotProps">
         <div
-          class="col-12 md:col-4"
-          style="background-color: #EFF3F8"
+          class="flex justify-content-center col-12 md:col-4"
+          style="background-color: #EFF3F8;"
         >
           <Card
-            style="margin: 30px 30px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
+            class=" m-5 w-full"
+            style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
           >
             <template #title>
               <p>At Home Collection Booking</p>
