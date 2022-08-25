@@ -4,14 +4,13 @@
     :key="t"
     :lat="t.position.latitude"
     :lng="t.position.longitude"
-    :icon="tIcon"
+    :icon-path="'https://i.postimg.cc/tCcLj6dL/garbage-truck.png'"
     @click="$emit('open-sidebar', t.truckId)"
   />
 </template>
 
 <script>
 import MarkerComponent from '@/components/map/MarkerComponent';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 //import axios from 'axios';
 import randomLatitude from 'random-latitude';
@@ -24,10 +23,6 @@ export default {
 	data() {
 		return {
 			trucks:[],
-			tIcon: L.icon({
-				iconUrl: 'https://i.postimg.cc/tCcLj6dL/garbage-truck.png',
-				iconSize:     [32, 32], // size of the icon
-			}),
 		};
 	},
 	mounted() {

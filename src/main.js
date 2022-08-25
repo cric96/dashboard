@@ -18,8 +18,9 @@ import MissionDetails from '@/components/missions/MissionDetails';
 import BookingList from '@/components/bookings/BookingList';
 import BookingForm from '@/components/bookings/BookingForm';
 import RegistrationForm from '@/components/authentication/RegistrationForm';
-import { useUserStore } from '@/components/stores/UserStore';
+import { useUserStore } from '@/stores/UserStore';
 import ComplaintForm from '@/components/complaints/ComplaintForm';
+import { useSocketStore } from '@/stores/SocketStore';
 
 const routes = [
 	{
@@ -83,12 +84,16 @@ const router = createRouter({
 
 router.beforeEach((to) => {
 	const userStore = useUserStore();
+	const socketStore = useSocketStore();
 	if (to.name !== 'Account' &&
 		to.name !== 'Map' &&
 		to.name !== '' &&
 		to.name !== 'Registration Form' &&
 		!userStore.isLogged) {
 		return '/dashboard/account';
+	}
+	if (socketStore.sessionId !== '' && userStore.isLogged) {
+		socketStore.reconnect();
 	}
 });
 

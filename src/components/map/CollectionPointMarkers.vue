@@ -4,14 +4,13 @@
     :key="cp"
     :lat="cp.position.latitude"
     :lng="cp.position.longitude"
-    :icon="cpIcon"
+    :icon-path="'https://i.postimg.cc/PfCmTmb2/collection-point.png'"
     @click="$emit('open-sidebar', cp.id)"
   />
 </template>
 
 <script>
 import MarkerComponent from '@/components/map/MarkerComponent';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import randomLatitude from 'random-latitude';
@@ -23,10 +22,6 @@ export default {
 	data() {
 		return {
 			collectionPoints:[],
-			cpIcon: L.icon({
-				iconUrl: 'https://i.postimg.cc/PfCmTmb2/collection-point.png',
-				iconSize:     [32, 32], // size of the icon
-			}),
 		};
 	},
 	mounted() {

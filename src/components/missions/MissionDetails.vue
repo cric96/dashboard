@@ -1,14 +1,17 @@
 <template>
   <div class="flex flex-column justify-content-start card-container m-5 w-full">
-    <div class="flex align-items-center justify-content-start">
-      <h3>Mission id</h3>
-    </div>
-    <div class="flex align-items-center justify-content-start">
-      Truck: xyz
-    </div>
-    <div class="flex align-items-center justify-content-start">
-      Type of Waste : svt
-    </div>
+    <Card class="m-3">
+      <template #title>
+        Mission id
+      </template>
+      <template #content>
+        <ul style="list-style-type:none; text-align: left">
+          <li> Type of Mission: xyz </li>
+          <li> Type of Waste: xyz </li>
+          <li> Truck id: 123 </li>
+        </ul>
+      </template>
+    </Card>
     <Timeline
       :value="eventsToDisplay"
       align="alternate"
@@ -116,4 +119,6 @@ export default {
   align-self: stretch !important;
   flex: auto !important;
 }
+a { text-decoration: none; }
+
 </style>
