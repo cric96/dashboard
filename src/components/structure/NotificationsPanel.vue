@@ -1,5 +1,8 @@
 <template>
-  <div class="outer-container">
+  <div
+    v-if="!notStore.empty"
+    class="outer-container"
+  >
     <ScrollPanel
       style="height: 400px;"
     >
@@ -11,12 +14,12 @@
         >
           <template #title>
             <p class="title">
-              Booking: {{ n._id }}
+              Booking: {{ n.booking._id }}
             </p>
           </template>
           <template #content>
             <p class="description">
-              Your at home collection booking is {{ n.status }}
+              Your at home collection booking is {{ n.booking.status }}
             </p>
           </template>
           <template #footer>
@@ -24,13 +27,16 @@
               class="flex justify-content-between flex-wrap"
               style="padding: 0"
             >
-              <Button class="p-button-rounded p-button-sm">
-                Details
+              <Button
+                class="p-button-rounded p-button-sm"
+                @click="notStore.delete(n)"
+              >
+                Delete
               </Button>
               <Button
                 v-if="!n.isRead"
                 class="p-button-rounded p-button-sm"
-                @click="n.isRead=true"
+                @click="notStore.markAsRead(n)"
               >
                 Mark as read
               </Button>
@@ -40,10 +46,13 @@
       </div>
     </ScrollPanel>
   </div>
+  <p v-if="notStore.empty">
+    No new notifications
+  </p>
 </template>
 
 <script>
-import { useNotificationStore } from '@/components/stores/NotificationStore';
+import { useNotificationStore } from '@/stores/NotificationStore';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 import ScrollPanel from 'primevue/scrollpanel';

@@ -111,6 +111,7 @@
             type="submit"
             label="Submit"
             class="mt-2"
+            :disabled="submitted"
           />
         </form>
       </template>
@@ -127,7 +128,7 @@ import Card from 'primevue/card';
 import InputText from 'primevue/inputtext';
 import axios from 'axios';
 import Dialog from 'primevue/dialog';
-import { useUserStore } from '@/components/stores/UserStore';
+import { useUserStore } from '@/stores/UserStore';
 
 export default {
 	name: 'BookingForm',

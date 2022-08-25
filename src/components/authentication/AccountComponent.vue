@@ -47,8 +47,9 @@ import Button from 'primevue/button';
 import Divider from 'primevue/divider';
 import Card from 'primevue/card';
 import LoginForm from '@/components/authentication/LoginForm';
-import { useUserStore } from '@/components/stores/UserStore';
-import { useSocketStore } from '@/components/stores/SocketStore';
+import { useUserStore } from '@/stores/UserStore';
+import { useSocketStore } from '@/stores/SocketStore';
+import { useNotificationStore } from '@/stores/NotificationStore';
 export default {
 	name: 'AccountComponent',
 	components:{
@@ -60,24 +61,27 @@ export default {
 	setup() {
 		const userStore = useUserStore();
 		const socketStore = useSocketStore();
-		return { userStore, socketStore };
+		const notStore = useNotificationStore();
+		return { userStore, socketStore, notStore };
 	},
 	data() {
 		return {
 
 		};
 	},
-	created() {
-		if (this.socketStore.sessionId !== '' && this.userStore.isLogged) {
-			this.socketStore.reconnect();
-		} else {
-			console.log('User not connected ' + this.socketStore.sessionId + '  ' + this.userStore.isLogged);
-		}
-	},
+	// created() {
+	// 	if (this.socketStore.sessionId !== '' && this.userStore.isLogged) {
+	// 		this.socketStore.reconnect();
+	// 	} else {
+	// 		console.log('User not connected ' + this.socketStore.sessionId + '  ' + this.userStore.isLogged);
+	// 	}
+	// },
 	methods:{
 		logout() {
 			this.userStore.logout();
 			this.socketStore.disconnect();
+			this.notStore.logout();
+
 		}
 	}
 };

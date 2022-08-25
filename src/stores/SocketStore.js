@@ -1,6 +1,7 @@
 import  { defineStore } from 'pinia';
 import { io } from 'socket.io-client';
-import { useNotificationStore } from '@/components/stores/NotificationStore';
+import { useNotificationStore } from '@/stores/NotificationStore';
+import { useBookingStore } from '@/stores/BookingStore';
 
 export const useSocketStore = defineStore('socket', {
 	state: () => ({
@@ -35,11 +36,12 @@ export const useSocketStore = defineStore('socket', {
 		receiveNotification() {
 			this.socket.on('assigned', (res) => {
 				console.log('notification received');
-				// this.$toast.add({ severity:'success', summary: 'News about your booking',
-				// 	detail:'The status of one of your At Home Collection booking is changed ', life: 3000 });
-				res.isRead = false;
 				useNotificationStore().addNotification(res);
+				useBookingStore().updateBooking(res.booking);
 			});
+		},
+		emit(on, msg) {
+			this.socket.emit(on, msg);
 		},
 		disconnect() {
 			this.socket.disconnect();

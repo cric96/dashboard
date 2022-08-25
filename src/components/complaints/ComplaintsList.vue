@@ -82,7 +82,7 @@ import Button from 'primevue/button';
 import DataView from 'primevue/dataview';
 import Card from 'primevue/card';
 // import axios from 'axios';
-import { useUserStore } from '@/components/stores/UserStore';
+import { useUserStore } from '@/stores/UserStore';
 import Divider from 'primevue/divider';
 import ComplaintFilterPanel from '@/components/complaints/ComplaintFilterPanel';
 import OverlayPanel from 'primevue/overlaypanel';

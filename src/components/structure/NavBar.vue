@@ -55,8 +55,8 @@ import Menubar from 'primevue/menubar';
 import Button from 'primevue/button';
 import OverlayPanel from 'primevue/overlaypanel';
 import NotificationsPanel from '@/components/structure/NotificationsPanel';
-import { useNotificationStore } from '@/components/stores/NotificationStore';
-import { useUserStore } from '@/components/stores/UserStore';
+import { useNotificationStore } from '@/stores/NotificationStore';
+import { useUserStore } from '@/stores/UserStore';
 export default {
 	name: 'NavBar',
 	components: {

@@ -95,7 +95,7 @@ import Card from 'primevue/card';
 import InputText from 'primevue/inputtext';
 // import axios from 'axios';
 import Dialog from 'primevue/dialog';
-import { useUserStore } from '@/components/stores/UserStore';
+import { useUserStore } from '@/stores/UserStore';
 import Textarea from 'primevue/textarea';
 
 export default {

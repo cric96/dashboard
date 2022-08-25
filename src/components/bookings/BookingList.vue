@@ -73,11 +73,11 @@
 import Button from 'primevue/button';
 import DataView from 'primevue/dataview';
 import Card from 'primevue/card';
-import axios from 'axios';
 import moment from 'moment';
-import { useUserStore } from '@/components/stores/UserStore';
+import { useUserStore } from '@/stores/UserStore';
 import BookingFilterPanel from '@/components/bookings/BookingFilterPanel';
 import OverlayPanel from 'primevue/overlaypanel';
+import { useBookingStore } from '@/stores/BookingStore';
 export default {
 	name: 'BookingList',
 	components:{
@@ -89,7 +89,8 @@ export default {
 	},
 	setup() {
 		const userStore = useUserStore();
-		return { userStore };
+		const bookingStore = useBookingStore();
+		return { userStore, bookingStore };
 	},
 	data() {
 		return {
@@ -99,16 +100,16 @@ export default {
 	},
 	computed:{
 		filteredBookings() {
-			return this.bookings
+			return this.bookingStore.bookings
 				.filter(b => this.filters.statusFilters.length === 0 || this.filters.statusFilters.includes(b.status))
 				.filter(b => this.filters.wasteFilters.length === 0 || this.filters.wasteFilters.includes(b.typeOfWaste.wasteName));
 		}
 	},
 	created() {
 		if (this.userStore.isCitizen)
-			axios.get('http://localhost:3000/bookings/user/' + this.userStore.userId).then(res => this.bookings = res.data.reverse());
+			this.bookingStore.fetchUserBookings(this.userStore.userId);
 		else if (this.userStore.isManager)
-			axios.get('http://localhost:3000/bookings/').then(res => this.bookings = res.data.reverse());
+			this.bookingStore.fetchAllBookings();
 
 	},
 	methods: {

@@ -62,7 +62,7 @@
 
 <script>
 import Checkbox from 'primevue/checkbox';
-import { useUserStore } from '@/components/stores/UserStore';
+import { useUserStore } from '@/stores/UserStore';
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
 

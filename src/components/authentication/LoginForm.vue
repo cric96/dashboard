@@ -53,8 +53,8 @@ import { required, email } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import axios from 'axios';
 import Password from 'primevue/password';
-import { useUserStore } from '@/components/stores/UserStore';
-import { useSocketStore } from '@/components/stores/SocketStore';
+import { useUserStore } from '@/stores/UserStore';
+import { useSocketStore } from '@/stores/SocketStore';
 
 export default {
 	name: 'LoginForm',
@@ -99,7 +99,7 @@ export default {
 				axios.post('http://localhost:3002/authentication/login', account)
 					.then(response => {
 						if (response.status === 200) {
-							console.log(response.data);
+							console.log('Connetto...');
 							this.userStore.login(response.data.user);
 							this.socketStore.connect(this.userStore.userId);
 						}
