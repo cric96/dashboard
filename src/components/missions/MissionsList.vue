@@ -32,7 +32,7 @@
           header="Status"
         >
           <template #body="slotProps">
-            <span :class="'p-badge'">{{ slotProps.data.completed }}</span>
+            <span :class="'mission-status-'+slotProps.data.completed">{{ missionStatus(slotProps.data.completed) }}</span>
           </template>
         </Column>
         <Column
@@ -80,6 +80,10 @@ export default {
 	methods:{
 		missionDetailsPath(id) {
 			return '/dashboard/missions/'+id;
+		},
+		missionStatus(completed) {
+			console.log('mission-status-'+completed);
+			return completed==='true' ? 'COMPLETED' : 'IN PROGRESS';
 		}
 	},
 };
@@ -87,4 +91,16 @@ export default {
 
 <style scoped>
 a { text-decoration: none; }
+.mission-status-true {
+  background-color: #C8E6C9;
+  color: green;
+  font-weight: bold;
+  padding: 1px 5px;
+}
+.mission-status-false {
+  background-color: #ffcc80;
+  color: #ef6c00;
+  font-weight: bold;
+  padding: 1px 5px;
+}
 </style>
