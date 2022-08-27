@@ -91,7 +91,6 @@ export default {
 				{ name: 'ORGANIC' },
 			],
 			submitted:null,
-			showMessage:false,
 		};
 	},
 	validations() {

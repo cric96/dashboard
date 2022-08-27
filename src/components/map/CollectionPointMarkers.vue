@@ -17,24 +17,28 @@ import axios from 'axios';
 export default {
 	name: 'CollectionPointMarkers',
 	components: { MarkerComponent },
-	emits: ['open-sidebar'],
+	props:{
+		'cpToDelete':{
+			type:String,
+			default: null,
+		}
+	},
+	emits: ['open-sidebar', 'deleted'],
 	data() {
 		return {
 			collectionPoints:[],
 		};
 	},
+	watch:{
+		cpToDelete(cp) {
+			if (cp != null) {
+				this.collectionPoints = this.collectionPoints.filter(c => c.id !== cp);
+				this.$emit('deleted');
+				axios.delete(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/collectionpoints/'+cp).then(res => console.log(res));
+			}
+		}
+	},
 	mounted() {
-		// for (let i = 0; i < 6; i++) {
-		// 	let lat = randomLatitude({ min:44.14, max:44.20 });
-		// 	let lng = randomLongitude({ min:12.24, max:12.30 });
-		// 	this.collectionPoints.push({
-		// 		id:'Cp-'+i,
-		// 		position:{
-		// 			latitude:lat,
-		// 			longitude: lng,
-		// 		}
-		// 	});
-		// }
 		this.fetchCollectionPoints();
 	},
 	methods : {
@@ -47,7 +51,6 @@ export default {
 				}
 			})
 				.then(res => {
-					console.log(res);
 					res.data.forEach(c => this.collectionPoints.push(c));
 				});
 		}

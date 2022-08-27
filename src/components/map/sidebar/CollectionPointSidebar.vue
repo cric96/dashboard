@@ -7,11 +7,12 @@
           <Button
             class="p-button-rounded p-button-success m-1"
             icon="pi pi-plus"
+            @click="showDumpsterForm=true"
           />
           <Button
             class="p-button-rounded p-button-danger m-1"
             icon="pi pi-trash"
-            @click="$emit('deleteCollectionPoint', collectionPointId)"
+            @click="$emit('deleteCollectionPoint')"
           />
         </div>
       </div>
@@ -21,6 +22,7 @@
       #content
     >
       <div class="flex flex-column justify-content-evenly">
+        <ProgressSpinner v-if="fetchingDumpster" />
         <DumpsterCard
           v-for="d in dumpsters"
           :key="d"
@@ -29,6 +31,14 @@
           @delete="deleteDumpster(d)"
         />
       </div>
+      <Dialog
+        v-model:visible="showDumpsterForm"
+      >
+        <DumpsterForm
+          class="m-3"
+          @dumpster="d => addDumpster(d)"
+        />
+      </Dialog>
     </template>
   </Sidebar>
 </template>
@@ -38,18 +48,26 @@ import Sidebar from '@/components/map/sidebar/Sidebar';
 import DumpsterCard from '@/components/map/sidebar/DumpsterCard';
 import axios from 'axios';
 import Button from 'primevue/button';
+import DumpsterForm from '@/components/collectionPoints/DumpsterForm';
+import Dialog from 'primevue/dialog';
+import ProgressSpinner from 'primevue/progressspinner';
 
 export default {
 	name: 'CollectionPointSidebar',
 	components:{
+		DumpsterForm,
+		Dialog,
 		Sidebar,
 		DumpsterCard,
 		Button,
+		ProgressSpinner,
 	},
 	emits: ['deleteCollectionPoint'],
 	data() {
 		return {
+			showDumpsterForm:false,
 			collectionPointId:null,
+			fetchingDumpster:true,
 			dumpsters:[],
 		};
 	},
@@ -65,6 +83,7 @@ export default {
 			})
 				.then(res => {
 					console.log(res);
+					this.fetchingDumpster = false;
 					res.data.forEach(d => this.dumpsters.push(d));
 				});
 		},
@@ -78,6 +97,23 @@ export default {
 				console.log(res);
 			});
 		},
+		addDumpster(d) {
+			this.showDumpsterForm=false;
+			let dump = {
+				dumpster: {
+					capacity:d.capacity,
+					wasteName:d.waste.name,
+				},
+				collectionPointId:this.collectionPointId
+			};
+			console.log(d);
+			axios.post(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/dumpsters/', dump).then(res => {
+				if (res.status === 200) {
+					console.log(res.data);
+					this.dumpsters.push(res.data);
+				}
+			});
+		}
 	},
 };
 </script>

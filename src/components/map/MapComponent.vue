@@ -4,6 +4,7 @@
       class="flex align-content-center justify-content-end m-2"
     >
       <AddCollectionPointButton
+        v-if="userStore.isManager"
         @pick="activatePositionPicker"
         @insert="$router.push(`/dashboard/collectionPoints/new/`);"
       />
@@ -28,7 +29,11 @@
         <l-tile-layer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <CollectionPointMarkers @open-sidebar="openSidebar" />
+        <CollectionPointMarkers
+          :cp-to-delete="collectionPointToDelete"
+          @open-sidebar="openSidebar"
+          @deleted="deleteMarker=false"
+        />
         <TruckMarkers
           v-if="userStore.isManager"
           @open-sidebar="openSidebar"
@@ -41,6 +46,7 @@
     :side-visibility="sidebarVisible"
     :item-id="markerClicked"
     @closed="sidebarClosed"
+    @delete-collection-point="closeSidebarAndDeleteMarker"
   />
   <TruckSidebar
     v-if="truckIsClicked"
@@ -88,6 +94,7 @@ export default {
 				latitude: 44.2227278,
 				longitude: 12.0412730,
 			},
+			deleteMarker:false,
 			sidebarVisible:false,
 			markerClicked:null,
 			locationWatcher:null,
@@ -99,6 +106,9 @@ export default {
 		},
 		truckIsClicked() {
 			return this.markerClicked != null && this.markerClicked.startsWith('T');
+		},
+		collectionPointToDelete() {
+			return this.deleteMarker && this.collectionPointIsClicked ? this.markerClicked : null;
 		}
 	},
 	unmounted() {
@@ -133,6 +143,10 @@ export default {
 					this.$router.push(`/dashboard/collectionPoints/new/${e.latlng.lat}/${e.latlng.lng}`);
 				});
 			}
+		},
+		closeSidebarAndDeleteMarker() {
+			this.sidebarVisible = false;
+			this.deleteMarker = true;
 		}
 	}
 };

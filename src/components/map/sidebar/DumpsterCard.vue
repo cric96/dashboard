@@ -18,28 +18,30 @@
         <Divider />
       </template>
       <template #content>
-        <div>
-          <p>
-            Status: <span :class="'dumpster-'+dumpsterStatusToValue.replace(' ', '-')">
-              {{ dumpsterStatusToValue.toUpperCase() }}
-            </span>
-          </p>
-          <div>
-            Type of waste: <Tag
-              :value="dumpsterOrdinaryWaste.wasteName"
-              :rounded="true"
-              :style="cssDumpsterColor"
-            />
+        <div class="flex justify-content-evenly align-content-center">
+          <div class="flex flex-column justify-content-evenly align-content-center">
+            <p>
+              Status: <span :class="'dumpster-'+dumpsterStatusToValue.replace(' ', '-')">
+                {{ dumpsterStatusToValue.toUpperCase() }}
+              </span>
+            </p>
+            <div>
+              Type of waste: <Tag
+                :value="dumpsterOrdinaryWaste.wasteName"
+                :rounded="true"
+                :style="cssDumpsterColor"
+              />
+            </div>
           </div>
-          <div class="flex justify-content-start align-content-center">
+          <div class="flex flex-column justify-content-center align-content-center">
             <p>Occupied percentage:</p>
-            <ProgressBar
-              class="mt-3 ml-2"
-              :value="dumpsterOccupiedPercentage"
-              style="width: 60%"
-            >
-              {{ dumpsterOccupiedPercentage }}%
-            </ProgressBar>
+            <div class="flex justify-content-center align-content-center">
+              <Knob
+                v-model="dumpsterOccupiedPercentage"
+                :max="100"
+                :readonly="true"
+              />
+            </div>
           </div>
         </div>
       </template>
@@ -50,15 +52,15 @@
 <script>
 import Card from 'primevue/card';
 import Tag from 'primevue/tag';
-import ProgressBar from 'primevue/progressbar';
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
+import Knob from 'primevue/knob';
 export default {
 	name: 'DCard',
 	components: {
 		Card,
 		Tag,
-		ProgressBar,
+		Knob,
 		Divider,
 		Button,
 	},

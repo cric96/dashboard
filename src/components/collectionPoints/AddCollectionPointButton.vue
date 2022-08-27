@@ -18,11 +18,11 @@ export default {
 		return {
 			items:[
 				{
-					label:'choosing',
+					label:'By picking the position',
 					command: () => this.$emit('pick')
 				},
 				{
-					label:'by insert',
+					label:'By entering the position',
 					command: () => this.$emit('insert')
 				}
 			]
