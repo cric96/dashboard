@@ -9,6 +9,7 @@
             </h3>
           </div>
           <Button
+            v-if="userStore.isManager"
             icon="pi pi-trash"
             class="p-button-danger p-button-rounded"
             @click="$emit('delete')"
@@ -55,6 +56,7 @@ import Tag from 'primevue/tag';
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
 import Knob from 'primevue/knob';
+import { useUserStore } from '@/stores/UserStore';
 export default {
 	name: 'DCard',
 	components: {
@@ -71,6 +73,10 @@ export default {
 		}
 	},
 	emits: ['delete'],
+	setup() {
+		const userStore = useUserStore();
+		return { userStore };
+	},
 	computed:{
 		dumpsterStatusToValue() {
 			return this.dumpster.available ? 'available': 'not available';

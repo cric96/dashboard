@@ -3,7 +3,10 @@
     <template #header>
       <div class="flex flex-wrap align-content-center justify-content-end">
         <div><h1> {{ collectionPointId }} </h1></div>
-        <div class="flex justify-content-around">
+        <div
+          v-if="userStore.isManager"
+          class="flex justify-content-around"
+        >
           <Button
             class="p-button-rounded p-button-success m-1"
             icon="pi pi-plus"
@@ -51,6 +54,7 @@ import Button from 'primevue/button';
 import DumpsterForm from '@/components/collectionPoints/DumpsterForm';
 import Dialog from 'primevue/dialog';
 import ProgressSpinner from 'primevue/progressspinner';
+import { useUserStore } from '@/stores/UserStore';
 
 export default {
 	name: 'CollectionPointSidebar',
@@ -63,6 +67,10 @@ export default {
 		ProgressSpinner,
 	},
 	emits: ['deleteCollectionPoint'],
+	setup() {
+		const userStore = useUserStore();
+		return { userStore };
+	},
 	data() {
 		return {
 			showDumpsterForm:false,
