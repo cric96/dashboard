@@ -11,11 +11,11 @@ export const useBookingStore = defineStore('booking', {
 			this.bookings.splice(this.bookings.indexOf(old), 1, bn);
 		},
 		fetchUserBookings(userId) {
-			axios.get('http://localhost:3000/bookings/user/' + userId)
+			axios.get(process.env.VUE_APP_BOOKING_MICROSERVICE + '/bookings/user/' + userId)
 				.then(res => this.bookings = res.data.reverse());
 		},
 		fetchAllBookings() {
-			axios.get('http://localhost:3000/bookings/').then(res => this.bookings = res.data.reverse());
+			axios.get(process.env.VUE_APP_BOOKING_MICROSERVICE + '/bookings/').then(res => this.bookings = res.data.reverse());
 
 		}
 	},

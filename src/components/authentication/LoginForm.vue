@@ -96,7 +96,7 @@ export default {
 					password: this.password
 				};
 				console.log(account);
-				axios.post('http://localhost:3002/authentication/login', account)
+				axios.post(process.env.VUE_APP_AUTHENTICATION_MICROSERVICE + '/authentication/login', account)
 					.then(response => {
 						if (response.status === 200) {
 							console.log('Connetto...');

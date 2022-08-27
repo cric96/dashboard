@@ -5,7 +5,7 @@ import { useBookingStore } from '@/stores/BookingStore';
 
 export const useSocketStore = defineStore('socket', {
 	state: () => ({
-		socket:io('http://localhost:3000', { autoConnect:false }),
+		socket:io(process.env.VUE_APP_BOOKING_MICROSERVICE, { autoConnect:false }),
 		sessionId: '',
 	}),
 	getters:{

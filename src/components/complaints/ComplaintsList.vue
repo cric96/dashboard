@@ -115,9 +115,9 @@ export default {
 	},
 	created() {
 		// if (this.userStore.isCitizen)
-		// 	axios.get('http://localhost:3000/complaints/user/' + this.userStore.userId).then(res => this.complaints = res.data.reverse());
+		// 	axios.get(process.env.VUE_APP_BOOKING_MICROSERVICE + '/complaints/user/' + this.userStore.userId).then(res => this.complaints = res.data.reverse());
 		// else if (this.userStore.isManager)
-		// 	axios.get('http://localhost:3000/complaints/').then(res => this.complaints = res.data.reverse());
+		// 	axios.get(process.env.VUE_APP_BOOKING_MICROSERVICE + '/complaints/').then(res => this.complaints = res.data.reverse());
 		for (let i = 0; i < 15; i++) {
 			this.complaints.push({ id: '345', ownerId: '123', title: 'smart card reader broken',
 				issuer:'CITIZEN', message:'the plastic dumpster in cp is broken', status:'OPEN' });

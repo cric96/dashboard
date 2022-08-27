@@ -177,7 +177,7 @@ export default {
 					password: this.password
 				};
 				console.log(account);
-				axios.post('http://localhost:3002/authentication/register', account)
+				axios.post(process.env.VUE_APP_AUTHENTICATION_MICROSERVICE + '/authentication/register', account)
 					.then(response => {
 						if (response.status === 200) {
 							console.log(response.data);

@@ -140,7 +140,7 @@ export default {
 					message: this.message,
 				};
 				console.log(complaint);
-				// axios.post('http://localhost:3000/bookings', booking)
+				// axios.post(process.env.VUE_APP_BOOKING_MICROSERVICE + '/bookings', booking)
 				// 	.then(response => {
 				// 		if (response.status === 200) {
 				// 			console.log(response.data);
