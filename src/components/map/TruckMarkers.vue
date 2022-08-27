@@ -12,9 +12,7 @@
 <script>
 import MarkerComponent from '@/components/map/MarkerComponent';
 import 'leaflet/dist/leaflet.css';
-//import axios from 'axios';
-import randomLatitude from 'random-latitude';
-import randomLongitude from 'random-longitude';
+import axios from 'axios';
 
 export default {
 	name: 'CollectionPointMarkers',
@@ -26,33 +24,22 @@ export default {
 		};
 	},
 	mounted() {
-		// this.getTrucksInMission();
-		for (let i = 0; i < 3; i++) {
-			let lat = randomLatitude({ min:44.14, max:44.20 });
-			let lng = randomLongitude({ min:12.24, max:12.30 });
-			this.trucks.push({
-				truckId:'T-'+i,
-				position : {
-					latitude:lat,
-					longitude: lng,
-
-				},
-			});
-		}
+		this.getTrucksInMission();
 	},
 	methods:{
-		// getTrucksInMission (){
-		// 	axios.get(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/inMission/', {
-		// 		headers: {
-		// 			'Access-Control-Allow-Origin': '*',
-		// 			'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-		// 			'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-		// 		}
-		// 	})
-		// 		.then(res => {
-		// 			res.data.forEach(t => this.trucks.push(t));
-		// 		});
-		// }
+		getTrucksInMission() {
+			this.trucks = [];
+			axios.get(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/inMission/', {
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+					'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+				}
+			})
+				.then(res => {
+					res.data.forEach(t => this.trucks.push(t));
+				});
+		}
 	},
 };
 </script>
