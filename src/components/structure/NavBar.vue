@@ -2,7 +2,6 @@
   <div>
     <Menubar
       :model="items"
-      style="'background-color': 'transparent'"
     >
       <template #start>
         SWC
@@ -16,6 +15,7 @@
           <Button
             class="p-button-text"
             :href="href"
+            style="color: darkgreen"
             @click="navigate"
           >
             {{ item.label }}
@@ -29,6 +29,7 @@
             icon="pi pi-bell"
             class="p-button-text p-button-rounded"
             :badge="notificationsBadge"
+            style="color:darkgreen; font-weight: bold"
             @click="toggleOP"
           />
           <OverlayPanel ref="op">
@@ -42,6 +43,7 @@
               :href="href"
               icon="pi pi-user"
               class="p-button-text p-button-rounded"
+              style="color:darkgreen; font-weight: bold"
               @click="navigate"
             />
           </router-link></span>
@@ -84,6 +86,11 @@ export default {
 					role:['MANAGER'],
 				},
 				{
+					label: 'Trucks',
+					to:'/dashboard/trucks',
+					role:['MANAGER'],
+				},
+				{
 					label: 'Complaints',
 					to:'/dashboard/complaints',
 					role:['MANAGER', 'CITIZEN']
@@ -120,4 +127,9 @@ export default {
   border: 2pt;
 }
 a { text-decoration: none; }
+
+::v-deep(.p-button-text){
+  font-weight: bold;
+  color: darkgreen;
+}
 </style>

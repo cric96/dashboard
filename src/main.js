@@ -21,6 +21,8 @@ import RegistrationForm from '@/components/authentication/RegistrationForm';
 import { useUserStore } from '@/stores/UserStore';
 import ComplaintForm from '@/components/complaints/ComplaintForm';
 import { useSocketStore } from '@/stores/SocketStore';
+import TrucksList from '@/components/trucks/TrucksList';
+import CollectionPointForm from '@/components/collectionPoints/CollectionPointForm';
 
 const routes = [
 	{
@@ -32,6 +34,18 @@ const routes = [
 		path: '/dashboard/map',
 		name: 'Map',
 		component: MapComponent,
+
+	},
+	{
+		path: '/dashboard/collectionPoints/new/:position*',
+		name: 'Collection Point Form',
+		component: CollectionPointForm,
+
+	},
+	{
+		path: '/dashboard/trucks',
+		name: 'Trucks',
+		component: TrucksList,
 
 	},
 	{

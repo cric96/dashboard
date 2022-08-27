@@ -2,7 +2,7 @@
   <Toast />
   <div
     id="main"
-    :style="{'background':'url(' + require('../assets/images/green-gradient-bg.jpg') + ') no-repeat center center fixed',
+    :style="{'background-color':'#dcedc8',
              '-webkit-background-size': 'cover',
              '-moz-background-size': 'cover',
              '-o-background-size': 'cover',
