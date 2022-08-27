@@ -1,27 +1,40 @@
 <template>
-  <div
-    :style="{
-      'width': '80vw',
-      'height': '80vh'}"
-  >
-    <l-map
-      id="map"
-      ref="map"
-      v-model="zoom"
-      v-model:zoom="zoom"
-      :max-zoom="18"
-      :min-zoom="5"
-      :zoom-animation="false"
-      :center="[userCoords.latitude, userCoords.longitude]"
-      :scroll-zoom="false"
-      @ready="mapIsReady"
+  <div class="flex flex-column">
+    <div
+      class="flex align-content-center justify-content-end m-2"
     >
-      <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      <AddCollectionPointButton
+        @pick="activatePositionPicker"
+        @insert="$router.push(`/dashboard/collectionPoints/new/`);"
       />
-      <CollectionPointMarkers @open-sidebar="openSidebar" />
-      <TruckMarkers @open-sidebar="openSidebar" />
-    </l-map>
+    </div>
+    <div
+      :style="{
+        'width': '80vw',
+        'height': '80vh'}"
+    >
+      <l-map
+        id="map"
+        ref="map"
+        v-model="zoom"
+        v-model:zoom="zoom"
+        :max-zoom="18"
+        :min-zoom="5"
+        :zoom-animation="false"
+        :center="[userCoords.latitude, userCoords.longitude]"
+        :scroll-zoom="false"
+        @ready="mapIsReady"
+      >
+        <l-tile-layer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <CollectionPointMarkers @open-sidebar="openSidebar" />
+        <TruckMarkers
+          v-if="userStore.isManager"
+          @open-sidebar="openSidebar"
+        />
+      </l-map>
+    </div>
   </div>
   <CollectionPointSidebar
     v-if="collectionPointIsClicked"
@@ -43,10 +56,13 @@ import {
 } from '@vue-leaflet/vue-leaflet';
 
 import 'leaflet/dist/leaflet.css';
+// import L from 'leaflet';
 import CollectionPointSidebar from '@/components/map/sidebar/CollectionPointSidebar';
 import TruckSidebar from '@/components/map/sidebar/TruckSidebar';
 import CollectionPointMarkers from '@/components/map/CollectionPointMarkers';
 import TruckMarkers from '@/components/map/TruckMarkers';
+import { useUserStore } from '@/stores/UserStore';
+import AddCollectionPointButton from '@/components/collectionPoints/AddCollectionPointButton';
 
 
 export default {
@@ -56,8 +72,13 @@ export default {
 		TruckSidebar,
 		CollectionPointSidebar,
 		TruckMarkers,
+		AddCollectionPointButton,
 		LMap,
 		LTileLayer,
+	},
+	setup() {
+		const userStore = useUserStore();
+		return { userStore };
 	},
 	data() {
 		return {
@@ -70,7 +91,6 @@ export default {
 			sidebarVisible:false,
 			markerClicked:null,
 			locationWatcher:null,
-			bgImage: '../../../assets/green-move.jpg',
 		};
 	},
 	computed:{
@@ -105,6 +125,15 @@ export default {
 		sidebarClosed() {
 			this.sidebarVisible = false;
 		},
+		activatePositionPicker() {
+			if (this.map !== null) {
+				document.getElementById('map').style.cursor = 'crosshair';
+				this.map.on('click', (e) => {
+					document.getElementById('map').style.cursor = '';
+					this.$router.push(`/dashboard/collectionPoints/new/${e.latlng.lat}/${e.latlng.lng}`);
+				});
+			}
+		}
 	}
 };
 

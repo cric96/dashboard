@@ -2,17 +2,27 @@
   <div class="flex flex-wrap align-content-start w-100">
     <Card>
       <template #title>
-        {{ dumpster.id }}
+        <div class="flex flex-wrap justify-content-end align-content-center">
+          <div>
+            <h3 style="margin: 0">
+              {{ dumpster.id }}
+            </h3>
+          </div>
+          <Button
+            icon="pi pi-trash"
+            class="p-button-danger p-button-rounded"
+            @click="$emit('delete')"
+          />
+        </div>
+
         <Divider />
       </template>
       <template #content>
         <div>
           <p>
-            Status: <Tag
-              :value="dumpsterStatusToValue"
-              :rounded="true"
-              :severity="dumpsterStatusToSeverity"
-            />
+            Status: <span :class="'dumpster-'+dumpsterStatusToValue.replace(' ', '-')">
+              {{ dumpsterStatusToValue.toUpperCase() }}
+            </span>
           </p>
           <div>
             Type of waste: <Tag
@@ -21,10 +31,16 @@
               :style="cssDumpsterColor"
             />
           </div>
-          <p>Occupied percentage:</p>
-          <ProgressBar :value="dumpsterOccupiedPercentage">
-            {{ dumpsterOccupiedPercentage }}%
-          </ProgressBar>
+          <div class="flex justify-content-start align-content-center">
+            <p>Occupied percentage:</p>
+            <ProgressBar
+              class="mt-3 ml-2"
+              :value="dumpsterOccupiedPercentage"
+              style="width: 60%"
+            >
+              {{ dumpsterOccupiedPercentage }}%
+            </ProgressBar>
+          </div>
         </div>
       </template>
     </Card>
@@ -36,6 +52,7 @@ import Card from 'primevue/card';
 import Tag from 'primevue/tag';
 import ProgressBar from 'primevue/progressbar';
 import Divider from 'primevue/divider';
+import Button from 'primevue/button';
 export default {
 	name: 'DCard',
 	components: {
@@ -43,6 +60,7 @@ export default {
 		Tag,
 		ProgressBar,
 		Divider,
+		Button,
 	},
 	props: {
 		'dumpster': {
@@ -50,12 +68,10 @@ export default {
 			default: null,
 		}
 	},
+	emits: ['delete'],
 	computed:{
 		dumpsterStatusToValue() {
 			return this.dumpster.available ? 'available': 'not available';
-		},
-		dumpsterStatusToSeverity() {
-			return this.dumpster.available ? 'success': 'danger';
 		},
 		dumpsterOccupiedPercentage() {
 			return this.dumpster.occupiedVolume.value/this.dumpster.dumpsterType.size.capacity*100;
@@ -80,5 +96,17 @@ export default {
 .p-card-content {
 	margin-top: 0 !important;
 	padding-top: 0 !important;
+}
+.dumpster-available{
+  background-color: #C8E6C9;
+  color: green;
+  font-weight: bold;
+  padding: 1px 5px;
+}
+.dumpster-not-available{
+  background-color: #FFCDD2;
+  color: #CF222E;
+  font-weight: bold;
+  padding: 1px 5px;
 }
 </style>
