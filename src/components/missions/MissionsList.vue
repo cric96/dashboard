@@ -1,14 +1,18 @@
 <template>
   <div>
     <h1> Missions </h1>
-    <div class="flex p-8 w-screen">
+    <ProgressSpinner v-if="missionsStore.fetchingMissions" />
+    <div
+      v-if="!missionsStore.fetchingMissions"
+      class="flex p-8 w-screen"
+    >
       <DataTable
-        :value="missions"
+        :value="missionsStore.missions"
         class="p-datatable-lg w-full"
         responsive-layout="scroll"
       >
         <Column
-          field="id"
+          field="missionId"
           header="ID"
         />
         <Column
@@ -16,7 +20,7 @@
           header="Date"
         />
         <Column
-          field="typeOfWaste"
+          field="typeOfWaste.wasteName"
           header="Type Of Waste"
         />
         <Column
@@ -24,7 +28,7 @@
           header="TypeOfMission"
         />
         <Column
-          field="truck"
+          field="truckId"
           header="Truck"
         />
         <Column
@@ -41,7 +45,7 @@
           <template #body="slotProps">
             <router-link
               v-slot="{href, navigate}"
-              :to="missionDetailsPath(slotProps.data.id)"
+              :to="'/dashboard/missions/'+ slotProps.data.missionId"
             >
               <Button
                 :href="href"
@@ -60,31 +64,30 @@
 <script>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import m  from '@/components/missions/missions.json';
 import Button from 'primevue/button';
+import ProgressSpinner from 'primevue/progressspinner';
+import { useMissionStore } from '@/stores/MissionStore';
 export default {
 	name: 'MissionsList',
 	components:{
 		DataTable,
 		Column,
 		Button,
+		ProgressSpinner,
 	},
-	data() {
-		return {
-			missions:[], 
-		};
+	setup() {
+		const missionsStore = useMissionStore();
+		return { missionsStore };
 	},
 	mounted() {
-		this.missions = m.missions;
+		this.missionsStore.fetchMissions();
 	},
 	methods:{
-		missionDetailsPath(id) {
-			return '/dashboard/missions/'+id;
-		},
 		missionStatus(completed) {
 			console.log('mission-status-'+completed);
-			return completed==='true' ? 'COMPLETED' : 'IN PROGRESS';
-		}
+			return completed ? 'COMPLETED' : 'IN PROGRESS';
+		},
+
 	},
 };
 </script>

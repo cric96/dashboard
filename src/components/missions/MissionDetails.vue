@@ -6,14 +6,14 @@
       </template>
       <template #content>
         <ul style="list-style-type:none; text-align: left">
-          <li> Type of Mission: xyz </li>
-          <li> Type of Waste: xyz </li>
-          <li> Truck id: 123 </li>
+          <li> Type of Mission: {{ missionsStore.currentMission.typeOfMission }} </li>
+          <li> Type of Waste: {{ missionsStore.currentMission.typeOfWaste.wasteName }} </li>
+          <li> Truck id: {{ missionsStore.currentMission.truckId }} </li>
         </ul>
       </template>
     </Card>
     <Timeline
-      :value="eventsToDisplay"
+      :value="stepsToDisplay"
       align="alternate"
       class="w-full"
     >
@@ -31,20 +31,10 @@
             <template #title>
               STEP #{{ slotProps.item.id }}
             </template>
-            <template #subtitle>
-              {{ slotProps.item.date }}
-              <div>
-                <i class="pi pi-map-marker" />
-                {{ slotProps.item.lat }}, {{ slotProps.item.lng }}
-              </div>
-            </template>
             <template #content>
               <div>
                 <p>
-                  Collection Point collected: {{ slotProps.item.cp }}
-                </p>
-                <p>
-                  Dumpster ID: {{ slotProps.item.dumpster }}
+                  Collection Point collected: {{ slotProps.item.stepId }}
                 </p>
               </div>
             </template>
@@ -59,6 +49,7 @@
 import Timeline from 'primevue/timeline';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
+import { useMissionStore } from '@/stores/MissionStore';
 
 export default {
 	name: 'MissionDetails',
@@ -67,47 +58,52 @@ export default {
 		Card,
 		Button,
 	},
+	setup() {
+		const missionsStore = useMissionStore();
+		return { missionsStore };
+	},
 	data() {
 		return {
-			events: [
-				{ id: '1', date: '16/10/2020 10:00', completed:true, cp:'123', dumpster:'1', lat:'44.12', lng:'12.32' },
-				{ id: '2', date: '16/10/2020 10:00', completed:true, cp:'123', dumpster:'1', lat:'44.12', lng:'12.32' },
-				{ id: '3', date: '16/10/2020 10:00', completed:false, cp:'123', dumpster:'1', lat:'44.12', lng:'12.32' },
-				{ id: '4', date: '16/10/2020 10:00', completed:false, cp:'123', dumpster:'1', lat:'44.12', lng:'12.32' },
-				{ id: '5', date: '16/10/2020 10:00', completed:false, cp:'123', dumpster:'1', lat:'44.12', lng:'12.32' },
-			],
-			eventsToDisplay:[],
+			missionId:this.$route.params.id,
+			steps:null,
+			stepsToDisplay:[],
 		};
 	},
-	mounted() {
-		console.log(this.events);
-		this.events.forEach(e => {
+	created() {
+		console.log(this.missionId);
+		this.missionsStore.setCurrentMission(this.missionId);
+		this.steps = this.missionsStore.currentMission.missionSteps;
+		console.log(this.steps);
+		for (let i = 0; i < this.steps.length; i++) {
+			const e = this.steps[i];
+			e.id = i;
 			e['icon'] = e.completed ? 'pi pi-check-circle' : 'pi pi-circle';
 			e['color'] = e.completed ? '#9cff57' : '#ffeb3b';
-			e['show'] = false;
-		});
-		let next2 = this.events.filter(e => !e.completed).slice(0,2);
-		console.log(next2);
-		next2.forEach(e => e['show']= true);
-		let next = next2[0];
-		next['icon'] = 'pi pi-chevron-circle-up';
-		next['color'] = '#ffab00';
-		let last = this.events.findLast(e => e.completed);
-		last['show'] = true;
-		let seeMoreNext = { id:'next', icon:'pi pi-angle-double-up', color:'#aeaeae' };
-		let seeMorePrev = { id:'prev', icon:'pi pi-angle-double-down', color:'#aeaeae' };
-
-		this.eventsToDisplay = this.events.filter(e => e.show).reverse();
-		this.eventsToDisplay.unshift(seeMoreNext);
-		this.eventsToDisplay.push(seeMorePrev);
+			e['show'] = true;
+		}
+		// let next2 = this.steps.filter(e => !e.completed).slice(0,2);
+		// console.log(next2);
+		// next2.forEach(e => e['show']= true);
+		// let next = next2[0];
+		// next['icon'] = 'pi pi-chevron-circle-up';
+		// next['color'] = '#ffab00';
+		// let last = this.steps.findLast(e => e.completed);
+		// last['show'] = true;
+		this.stepsToDisplay = this.steps.filter(e => e.show).reverse();
+		// if (this.steps.length > 3) {
+		// 	let seeMoreNext = { id:'next', icon:'pi pi-angle-double-up', color:'#aeaeae' };
+		// 	let seeMorePrev = { id:'prev', icon:'pi pi-angle-double-down', color:'#aeaeae' };
+		// 	this.stepsToDisplay.unshift(seeMoreNext);
+		// 	this.stepsToDisplay.push(seeMorePrev);
+		// }
 	},
 	methods:{
 		show(id) {
 			if (id === 'next' || id === 'prev') {
-				this.events.filter(e => id === 'next' ? !e.completed : e.completed).forEach(e => e['show'] = true);
-				let seeMore = this.eventsToDisplay.find(e => e.id === (id === 'next' ? 'prev' : 'next'));
-				this.eventsToDisplay = this.events.filter(e => e.show).reverse();
-				if (seeMore) this.eventsToDisplay.splice((id === 'next' ? this.eventsToDisplay.length : 0), 0, seeMore);
+				this.steps.filter(e => id === 'next' ? !e.completed : e.completed).forEach(e => e['show'] = true);
+				let seeMore = this.stepsToDisplay.find(e => e.id === (id === 'next' ? 'prev' : 'next'));
+				this.stepsToDisplay = this.steps.filter(e => e.show).reverse();
+				if (seeMore) this.stepsToDisplay.splice((id === 'next' ? this.stepsToDisplay.length : 0), 0, seeMore);
 			}
 		}
 	},
