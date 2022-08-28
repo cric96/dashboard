@@ -93,10 +93,11 @@ import { useVuelidate } from '@vuelidate/core';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
 import InputText from 'primevue/inputtext';
-// import axios from 'axios';
+import axios from 'axios';
 import Dialog from 'primevue/dialog';
 import { useUserStore } from '@/stores/UserStore';
 import Textarea from 'primevue/textarea';
+import randomId from 'random-id';
 
 export default {
 	name: 'BookingForm',
@@ -134,27 +135,28 @@ export default {
 			this.submitted = true;
 			if (isFormValid) {
 				let complaint = {
+					id:'Complaint-'+randomId(),
 					ownerId: this.userStore.userId,
 					issuer:'USER',
 					title: this.title,
 					message: this.message,
 				};
 				console.log(complaint);
-				// axios.post(process.env.VUE_APP_BOOKING_MICROSERVICE + '/bookings', booking)
-				// 	.then(response => {
-				// 		if (response.status === 200) {
-				// 			console.log(response.data);
-				// 			this.toggleDialog();
-				//
-				// 		}
-				// 	});
+				axios.post(process.env.VUE_APP_COMPLAINT_MICROSERVICE + '/complaints', complaint)
+					.then(response => {
+						if (response.status === 200) {
+							console.log(response.data);
+							this.toggleDialog();
+
+						}
+					});
 			}
 		},
 		toggleDialog() {
 			this.showMessage = !this.showMessage;
 
 			if (!this.showMessage) {
-				this.$router.push('/dashboard/bookings');
+				this.$router.push('/dashboard/complaints');
 			}
 		}
 	}

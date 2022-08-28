@@ -50,7 +50,7 @@
             <template #footer>
               <div v-if="userStore.isManager && slotProps.data.status === 'OPEN'">
                 <Divider />
-                <Button @click="slotProps.data.status = 'CLOSE'">
+                <Button @click="complaintsStore.closeComplaint(slotProps.data.id)">
                   CLOSE
                 </Button>
               </div>
@@ -81,11 +81,11 @@
 import Button from 'primevue/button';
 import DataView from 'primevue/dataview';
 import Card from 'primevue/card';
-// import axios from 'axios';
 import { useUserStore } from '@/stores/UserStore';
 import Divider from 'primevue/divider';
 import ComplaintFilterPanel from '@/components/complaints/ComplaintFilterPanel';
 import OverlayPanel from 'primevue/overlaypanel';
+import { useComplaintStore } from '@/stores/ComplaintsStore';
 export default {
 	name: 'ComplaintList',
 	components:{
@@ -98,30 +98,26 @@ export default {
 	},
 	setup() {
 		const userStore = useUserStore();
-		return { userStore };
+		const complaintsStore = useComplaintStore();
+		return { userStore, complaintsStore };
 	},
 	data() {
 		return {
-			complaints:[],
 			filters: { statusFilters:[], issuers: [] },
 		};
 	},
 	computed:{
 		filteredComplaints() {
-			return this.complaints
+			return this.complaintsStore.complaints
 				.filter(c => this.filters.statusFilters.length === 0 || this.filters.statusFilters.includes(c.status))
 				.filter(c => this.filters.issuers.length === 0 || this.filters.issuers.includes(c.issuer));
 		}
 	},
 	created() {
-		// if (this.userStore.isCitizen)
-		// 	axios.get(process.env.VUE_APP_BOOKING_MICROSERVICE + '/complaints/user/' + this.userStore.userId).then(res => this.complaints = res.data.reverse());
-		// else if (this.userStore.isManager)
-		// 	axios.get(process.env.VUE_APP_BOOKING_MICROSERVICE + '/complaints/').then(res => this.complaints = res.data.reverse());
-		for (let i = 0; i < 15; i++) {
-			this.complaints.push({ id: '345', ownerId: '123', title: 'smart card reader broken',
-				issuer:'CITIZEN', message:'the plastic dumpster in cp is broken', status:'OPEN' });
-		}
+		if (this.userStore.isCitizen)
+			this.complaintsStore.fetchUserComplaints(this.userStore.userId);
+		else if (this.userStore.isManager)
+			this.complaintsStore.fetchComplaints();
 	},
 	methods: {
 		applyFilters(f) {
@@ -140,7 +136,7 @@ a { text-decoration: none; }
   font-weight: bold;
   padding: 1px 5px;
 }
-.complaint-close {
+.complaint-closed {
   background-color: #FFCDD2;
   color: #CF222E;
   font-weight: bold;

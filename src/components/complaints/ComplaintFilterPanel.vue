@@ -18,12 +18,12 @@
         v-model="statusFilters"
         name="state"
         input-id="state2"
-        value="CLOSE"
+        value="CLOSED"
       />
       <label
-        class="complaint-close"
+        class="complaint-closed"
         for="state2"
-      >CLOSE</label>
+      >CLOSED</label>
     </div>
     <div v-if="userStore.isManager">
       <h5>ISSUER</h5>
@@ -32,11 +32,11 @@
           v-model="issuers"
           name="issuer"
           input-id="issuer1"
-          value="CITIZEN"
+          value="USER"
         />
         <label
           for="issuer1"
-        >CITIZEN</label>
+        >USER</label>
       </div>
       <div class="field-checkbox">
         <Checkbox
@@ -105,7 +105,7 @@ p {
   font-weight: bold;
   padding: 1px 5px;
 }
-.complaint-close {
+.complaint-closed {
   background-color: #FFCDD2;
   color: #CF222E;
   font-weight: bold;
