@@ -76,6 +76,7 @@
                 id="email"
                 v-model="v$.email.$model"
                 :class="{'p-invalid':v$.email.$invalid && submitted}"
+                @input="emailUsed=false"
               />
               <label
                 for="email"
@@ -86,6 +87,10 @@
               v-if="(v$.email.$invalid && submitted) || v$.email.$pending.$response"
               class="p-error"
             >{{ v$.email.required.$message.replace('Value', 'Email') }}</small>
+            <small
+              v-if="emailUsed"
+              class="p-error"
+            >This email is already associated with an account</small>
           </div>
           <br>
           <div class="field">
@@ -146,6 +151,7 @@ export default {
 			password:'',
 			submitted:null,
 			showMessage:false,
+			emailUsed:false,
 		};
 	},
 	validations() {
@@ -182,7 +188,12 @@ export default {
 						if (response.status === 200) {
 							console.log(response.data);
 							this.toggleDialog();
-
+						} 
+					}).catch(err => {
+						console.log(err);
+						if (err.response.status === 401) {
+							this.emailUsed = true;
+							this.submitted = false;
 						}
 					});
 			}
