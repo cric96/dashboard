@@ -96,12 +96,15 @@ export default {
 	},
 	mounted() {
 		this.fetchTrucks();
-		this.truckPolling = setInterval(() => this.updateTrucks(), 3000);
+		this.activatePolling();
 	},
 	unmounted() {
 		clearInterval(this.truckPolling);
 	},
 	methods:{
+		activatePolling() {
+			this.truckPolling = setInterval(() => this.updateTrucks(), 3000);
+		},
 		truckStatus(inMission) {
 			return inMission ? 'IN MISSION' : 'AVAILABLE';
 		},
@@ -117,17 +120,24 @@ export default {
 		},
 		addTruck(t) {
 			this.showTruckForm = false;
+			clearInterval(this.truckPolling);
 			axios.post(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/', t)
 				.then(res => {
 					if (res.status === 200) {
 						t.truckId = res.data;
 						this.trucks.push(t);
+						this.activatePolling();
 					}
 				});
 		},
 		deleteTruck(t) {
+			clearInterval(this.truckPolling);
 			this.trucks.splice(this.trucks.indexOf(t), 1);
-			axios.delete(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/'+t.truckId);
+			axios.delete(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/'+t.truckId).then(res => {
+				if (res.status === 200) {
+					this.activatePolling();
+				}
+			});
 		},
 		updateTrucks() {
 			axios.get(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/').then(res => {
@@ -156,10 +166,6 @@ a { text-decoration: none; }
   color: #ef6c00;
   font-weight: bold;
   padding: 1px 5px;
-}
-
-::v-deep(.p-dataview-list) {
-  margin-bottom: 2rem;
 }
 
 .product-description {
