@@ -23,7 +23,7 @@
         <Divider />
       </template>
       <template #content>
-        <div class="flex justify-content-evenly align-content-center">
+        <div class="flex justify-content-between align-content-center">
           <div class="flex flex-column justify-content-evenly align-content-center">
             <p>
               Status: <span :class="'dumpster-'+dumpsterStatusToValue.replace(' ', '-')">

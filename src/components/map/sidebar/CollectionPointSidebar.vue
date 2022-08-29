@@ -37,18 +37,20 @@
       >
         <ProgressSpinner />
       </div>
-      <div
-        v-if="!fetchingDumpster"
-        class="flex flex-column justify-content-evenly"
-      >
-        <DumpsterCard
-          v-for="d in dumpsters"
-          :key="d"
-          class="flex align-items-center justify-content-center m-2"
-          :dumpster="d"
-          @delete="deleteDumpster(d)"
-        />
-      </div>
+      <ScrollPanel style="width: 100%; height: 100%">
+        <div
+          v-if="!fetchingDumpster"
+          class="flex flex-column justify-content-evenly"
+        >
+          <DumpsterCard
+            v-for="d in dumpsters"
+            :key="d"
+            class="flex align-items-center justify-content-center m-2"
+            :dumpster="d"
+            @delete="deleteDumpster(d)"
+          />
+        </div>
+      </ScrollPanel>
       <Dialog
         v-model:visible="showDumpsterForm"
       >
@@ -70,6 +72,7 @@ import DumpsterForm from '@/components/collectionPoints/DumpsterForm';
 import Dialog from 'primevue/dialog';
 import ProgressSpinner from 'primevue/progressspinner';
 import { useUserStore } from '@/stores/UserStore';
+import ScrollPanel from 'primevue/scrollpanel';
 
 export default {
 	name: 'CollectionPointSidebar',
@@ -80,6 +83,7 @@ export default {
 		DumpsterCard,
 		Button,
 		ProgressSpinner,
+		ScrollPanel,
 	},
 	emits: ['deleteCollectionPoint'],
 	setup() {
@@ -121,9 +125,11 @@ export default {
 			this.dumpstersPolling = setInterval(this.fetchCollectionPointDumpsters, 3000);
 		},
 		deleteDumpster(d) {
-			this.dumpsters.splice(this.dumpsters.indexOf(d), 1);
+			clearInterval(this.dumpstersPolling);
 			axios.delete(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/dumpsters/'+d.id).then(res => {
 				console.log(res);
+				this.dumpsters.splice(this.dumpsters.indexOf(d), 1);
+				this.dumpstersPolling = setInterval(this.fetchCollectionPointDumpsters, 3000);
 			});
 		},
 		addDumpster(d) {
@@ -135,17 +141,18 @@ export default {
 				},
 				collectionPointId:this.collectionPointId
 			};
-			console.log(d);
+			clearInterval(this.dumpstersPolling);
 			axios.post(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/dumpsters/', dump).then(res => {
 				if (res.status === 200) {
 					console.log(res.data);
-					this.dumpsters.push(res.data);
+					var tmp = this.dumpsters;
+					tmp.push(res.data);
+					tmp = tmp.sort((d1, d2) => d1.id.localeCompare(d2.id, 'en', { numeric:true }));
+					this.dumpsters = tmp;
+					this.dumpstersPolling = setInterval(this.fetchCollectionPointDumpsters, 3000);
 				}
 			});
 		},
-		updateDumpsters() {
-
-		}
 	},
 };
 </script>

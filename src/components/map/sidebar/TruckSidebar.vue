@@ -42,6 +42,7 @@ export default {
 		return {
 			truckId:null,
 			truck:null,
+			truckPolling:null,
 		};
 	},
 	computed:{
@@ -56,6 +57,8 @@ export default {
 		updateTruckId(id) {
 			this.truckId = id;
 			this.getTruckById();
+			if (this.truckPolling != null) clearInterval(this.truckPolling);
+			setInterval(()=>this.getTruckById(), 3000);
 		},
 		goToMissionDetails() {
 			this.$emit('exited');
