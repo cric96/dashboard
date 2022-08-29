@@ -1,7 +1,7 @@
 <template>
   <Card
     v-if="!userStore.isLogged"
-    class="hidden md:block md:w-8"
+    class="hidden md:block md:w-8 mt-5"
   >
     <template #content>
       <div class="grid">
@@ -20,22 +20,9 @@
     </template>
   </Card>
   <MobileAccount class="block md:hidden" />
-  <Card
-    v-if="userStore.isLogged"
-  >
-    <template #title>
-      {{ userStore.getUserName }}
-    </template>
-    <template #footer>
-      <Button @click="logout()">
-        Logout
-      </Button>
-    </template>
-  </Card>
 </template>
 
 <script>
-import Button from 'primevue/button';
 import Divider from 'primevue/divider';
 import Card from 'primevue/card';
 import LoginForm from '@/components/authentication/LoginForm';
@@ -50,7 +37,6 @@ export default {
 		SingUpButton,
 		MobileAccount,
 		LoginForm,
-		Button,
 		Divider,
 		Card,
 	},
@@ -60,19 +46,6 @@ export default {
 		const notStore = useNotificationStore();
 		return { userStore, socketStore, notStore };
 	},
-	data() {
-		return {
-
-		};
-	},
-	methods:{
-		logout() {
-			this.userStore.logout();
-			this.socketStore.disconnect();
-			this.notStore.logout();
-
-		}
-	}
 };
 </script>
 

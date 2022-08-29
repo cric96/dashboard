@@ -23,8 +23,8 @@
     </template>
   </Dialog>
 
-  <div class="flex justify-content-center">
-    <Card>
+  <div class="flex justify-content-center mt-5 w-full">
+    <Card class="w-full mx-5 md:w-2">
       <template #title>
         Registration
       </template>

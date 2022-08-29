@@ -5,7 +5,7 @@
     style="background-color: #f4f4f8"
   >
     <NavBar />
-    <div class="flex justify-content-center my-5">
+    <div class="flex justify-content-center my-1">
       <router-view />
     </div>
   </div>

@@ -102,6 +102,7 @@ export default {
 							console.log('Connetto...');
 							this.userStore.login(response.data.user);
 							this.socketStore.connect(this.userStore.userId);
+							this.$router.push('/dashboard/map/');
 						}
 					}).catch( error => {
 						console.log('ERROR: ' + error);

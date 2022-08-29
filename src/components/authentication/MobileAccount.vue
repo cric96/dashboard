@@ -1,11 +1,15 @@
 <template>
-  <div class="flex flex-column">
-    <LoginForm />
-    <Divider class="justify-content-center">
-      <b>OR</b>
-    </Divider>
-    <SingUpButton />
-  </div>
+  <Card class="mt-5">
+    <template #content>
+      <div class="flex flex-column">
+        <LoginForm />
+        <Divider class="justify-content-center">
+          <b>OR</b>
+        </Divider>
+        <SingUpButton />
+      </div>
+    </template>
+  </Card>
 </template>
 
 
@@ -13,6 +17,7 @@
 import LoginForm from '@/components/authentication/LoginForm';
 import SingUpButton from '@/components/authentication/SingUpButton';
 import Divider from 'primevue/divider';
+import Card from 'primevue/card';
 
 export default {
 	name: 'MobileAccount',
@@ -20,12 +25,10 @@ export default {
 		SingUpButton,
 		Divider,
 		LoginForm,
+		Card,
 	}
 };
 </script>
 
 <style scoped>
-::v-deep(.p-divider-content){
-  background-color: #f4f4f8;
-}
 </style>
