@@ -19,7 +19,7 @@
           </template>
           <template #content>
             <p class="description">
-              Your at home collection booking is {{ n.booking.status }}
+              Your at home collection booking is updated!
             </p>
           </template>
           <template #footer>

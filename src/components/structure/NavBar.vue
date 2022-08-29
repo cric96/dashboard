@@ -36,17 +36,15 @@
           <OverlayPanel ref="op">
             <NotificationsPanel />
           </OverlayPanel>
-          <router-link
-            v-slot="{href, navigate}"
-            to="/dashboard/account"
-          >
-            <Button
-              :href="href"
-              icon="pi pi-user"
-              class="p-button-text p-button-rounded nav-button"
-              @click="navigate"
-            />
-          </router-link></span>
+          <Button
+            icon="pi pi-user"
+            class="p-button-text p-button-rounded nav-button mx-3"
+            @click="account"
+          />
+          <OverlayPanel ref="lop">
+            <LogoutPanel @close="$refs.lop.hide()" />
+          </OverlayPanel>
+        </span>
       </template>
     </Menubar>
   </div>
@@ -59,9 +57,11 @@ import OverlayPanel from 'primevue/overlaypanel';
 import NotificationsPanel from '@/components/structure/NotificationsPanel';
 import { useNotificationStore } from '@/stores/NotificationStore';
 import { useUserStore } from '@/stores/UserStore';
+import LogoutPanel from '@/components/authentication/LogoutPanel';
 export default {
 	name: 'NavBar',
 	components: {
+		LogoutPanel,
 		Menubar,
 		Button,
 		NotificationsPanel,
@@ -111,6 +111,13 @@ export default {
 	methods:{
 		toggleOP(event) {
 			this.$refs.op.toggle(event);
+		},
+		account(event) {
+			if (!this.userStore.isLogged) {
+				this.$router.push('/dashboard/account');
+			} else {
+				this.$refs.lop.toggle(event);
+			}
 		},
 	}
 };
