@@ -1,6 +1,6 @@
 <template>
   <ProgressSpinner v-if="fetchingTrucks" />
-  <div class="flex justify-content-center m-5 md:m-8">
+  <div class="flex justify-content-center mt-5 mx-5 md:mx-8">
     <DataView
       v-if="!fetchingTrucks"
       :value="trucks"

@@ -11,14 +11,29 @@
       class="m-5"
     >
       <template #header>
-        <div style="text-align: right">
+        <div class="flex justify-content-between">
           <Button
             class="p-button-text p-button-rounded"
             icon="pi pi-filter"
             @click="e => $refs.fop.toggle(e)"
           />
+          <router-link
+            v-if="userStore.isCitizen"
+            v-slot="{href, navigate}"
+            :to="'/dashboard/bookings/new'"
+          >
+            <Button
+              :href="href"
+              label="Create New"
+              class="p-button-raised"
+              @click="navigate"
+            />
+          </router-link>
         </div>
-        <OverlayPanel ref="fop">
+        <OverlayPanel
+          ref="fop"
+          class="h-20rem m-0 p-0"
+        >
           <BookingFilterPanel
             :filters="filters"
             @filters="applyFilters"
@@ -31,7 +46,7 @@
           style="background-color: #EFF3F8;"
         >
           <Card
-            class=" m-5 w-full"
+            class=" m-2 md:my-3 w-full md:w-9"
             style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
           >
             <template #title>
@@ -54,18 +69,6 @@
         No Bookings to Show
       </template>
     </DataView>
-    <router-link
-      v-if="userStore.isCitizen"
-      v-slot="{href, navigate}"
-      :to="'/dashboard/bookings/new'"
-    >
-      <Button
-        :href="href"
-        label="Create New"
-        class="p-button-raised"
-        @click="navigate"
-      />
-    </router-link>
   </div>
 </template>
 
@@ -150,6 +153,10 @@ a { text-decoration: none; }
 
 ::v-deep(.p-paginator){
   background-color: #f8f9fa;
+}
+::v-deep(.p-scrollpanel-content){
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 </style>

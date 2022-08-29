@@ -11,9 +11,12 @@
         :style="{fontSize: '5rem', color: 'var(--green-500)' }"
       />
       <h5>Complaint successfully registered!</h5>
-      <p :style="{lineHeight: 1.5, textIndent: '1rem'}">
-        Thanks to send us the complaint! We will trying to close it asap to give you a better service
+      <p
+        :style="{lineHeight: 1.5, textIndent: '1rem'}"
+      >
+        Thanks to send us the complaint!
       </p>
+      <p>We will trying to close it as soon as possible in order to give you a better service.</p>
     </div>
     <template #footer>
       <div class="flex justify-content-center">
@@ -26,7 +29,7 @@
     </template>
   </Dialog>
 
-  <div class="flex justify-content-center w-full h-full">
+  <div class="flex justify-content-center w-full h-full mt-5">
     <Card class="md:w-3">
       <template #title>
         Create a new complaint

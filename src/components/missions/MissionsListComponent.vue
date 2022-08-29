@@ -8,6 +8,7 @@
       :paginator="true"
       :rows="9"
     >
+      <template #header />
       <template #list="slotProps">
         <div class="col-12">
           <div class="flex flex-column md:flex-row align-items-center justify-content-between md:p-5">

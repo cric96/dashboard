@@ -8,26 +8,39 @@
       class="m-5"
     >
       <template #header>
-        <div style="text-align: right">
+        <div class="flex justify-content-between">
           <Button
             class="p-button-text p-button-rounded"
             icon="pi pi-filter"
             @click="e => $refs.fop.toggle(e)"
           />
+          <OverlayPanel ref="fop">
+            <ComplaintFilterPanel
+              :filters="filters"
+              @filters="applyFilters"
+            />
+          </OverlayPanel>
+
+          <router-link
+            v-if="userStore.isCitizen"
+            v-slot="{href, navigate}"
+            :to="'/dashboard/complaints/new'"
+          >
+            <Button
+              :href="href"
+              label="Create New"
+              class="p-button-raised"
+              @click="navigate"
+            />
+          </router-link>
         </div>
-        <OverlayPanel ref="fop">
-          <ComplaintFilterPanel
-            :filters="filters"
-            @filters="applyFilters"
-          />
-        </OverlayPanel>
       </template>
       <template #grid="slotProps">
         <div
-          class="col-12 md:col-3"
+          class="col-12 md:col-4 "
           style="background-color: #EFF3F8"
         >
-          <Card class="m-3 md:m-5">
+          <Card class="m-3 md:mx-5 md:mt-3">
             <template #title>
               <p style="text-transform: capitalize">
                 {{ slotProps.data.title }}
@@ -61,18 +74,6 @@
         No Complaints to Show
       </template>
     </DataView>
-    <router-link
-      v-if="userStore.isCitizen"
-      v-slot="{href, navigate}"
-      :to="'/dashboard/complaints/new'"
-    >
-      <Button
-        :href="href"
-        label="Create New"
-        class="p-button-raised"
-        @click="navigate"
-      />
-    </router-link>
   </div>
 </template>
 

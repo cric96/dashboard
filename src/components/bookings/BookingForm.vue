@@ -12,7 +12,10 @@
       />
       <h5>Booking successfully registered!</h5>
       <p :style="{lineHeight: 1.5, textIndent: '1rem'}">
-        Your booking is registered! You will receive a notification when the date for your "At Home" Collection is determines
+        Your booking is registered!
+      </p>
+      <p>
+        You will receive a notification when the date for your "At Home" collection is determines.
       </p>
     </div>
     <template #footer>
@@ -27,7 +30,7 @@
   </Dialog>
 
   <div class="flex justify-content-center">
-    <Card>
+    <Card class="m-3">
       <template #title>
         Create Your New "At Home" Collection Booking
       </template>

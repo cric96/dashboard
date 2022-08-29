@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-column justify-content-start card-container m-5 w-full">
-    <ProgressSpinner v-if="missionsStore.currentMission === null" />
+    <ProgressSpinner
+      v-if="missionsStore.currentMission === null"
+    />
     <Card
       v-if="missionsStore.currentMission != null"
       class="m-3"

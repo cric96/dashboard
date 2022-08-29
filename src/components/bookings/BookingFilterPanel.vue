@@ -1,5 +1,5 @@
 <template>
-  <div class="outer-container">
+  <ScrollPanel class="outer-container h-13rem p-0 m-0 w-full">
     <h5>STATUS</h5>
     <div
       v-for="state in states"
@@ -33,14 +33,14 @@
         :for="'waste'+waste.toLowerCase()"
       >{{ waste }}</label>
     </div>
-
-    <Divider />
+  </ScrollPanel>
+  <Divider class="mt-2" />
+  <div class="flex justify-content-center">
     <Button
+      label="Apply"
       class="p-button-sm"
       @click="$emit('filters', {statusFilters, wasteFilters})"
-    >
-      Apply
-    </Button>
+    />
   </div>
 </template>
 
@@ -49,13 +49,15 @@ import Checkbox from 'primevue/checkbox';
 import { useUserStore } from '@/stores/UserStore';
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
+import ScrollPanel from 'primevue/scrollpanel';
 
 export default {
 	name: 'ComplaintFilterPanel',
 	components:{
 		Checkbox,
 		Divider,
-		Button
+		Button,
+		ScrollPanel,
 	},
 	props:{
 		'filters': {
