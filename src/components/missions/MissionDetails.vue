@@ -1,8 +1,12 @@
 <template>
   <div class="flex flex-column justify-content-start card-container m-5 w-full">
-    <Card class="m-3">
+    <ProgressSpinner v-if="missionsStore.currentMission === null" />
+    <Card
+      v-if="missionsStore.currentMission != null"
+      class="m-3"
+    >
       <template #title>
-        Mission id
+        {{ missionsStore.currentMission.missionId }}
       </template>
       <template #content>
         <ul style="list-style-type:none; text-align: left">
@@ -50,6 +54,7 @@ import Timeline from 'primevue/timeline';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 import { useMissionStore } from '@/stores/MissionStore';
+import ProgressSpinner from 'primevue/progressspinner';
 
 export default {
 	name: 'MissionDetails',
@@ -57,52 +62,50 @@ export default {
 		Timeline,
 		Card,
 		Button,
+		ProgressSpinner,
 	},
 	setup() {
 		const missionsStore = useMissionStore();
 		return { missionsStore };
 	},
-	data() {
-		return {
-			missionId:this.$route.params.id,
-			steps:null,
-			stepsToDisplay:[],
-		};
+	computed:{
+		stepsToDisplay() {
+			console.log(this.missionsStore.getMissionSteps);
+			for (let i = 0; i < this.missionsStore.getMissionSteps.length; i++) {
+				const e = this.missionsStore.getMissionSteps[i];
+				e.id = i;
+				e['icon'] = e.completed ? 'pi pi-check-circle' : 'pi pi-circle';
+				e['color'] = e.completed ? '#9cff57' : '#ffeb3b';
+				e['show'] = true;
+			}
+			// let next2 = this.missionsStore.getMissionSteps.filter(e => !e.completed).slice(0,2);
+			// console.log(next2);
+			// next2.forEach(e => e['show']= true);
+			// let next = next2[0];
+			// next['icon'] = 'pi pi-chevron-circle-up';
+			// next['color'] = '#ffab00';
+			// let last = this.missionsStore.getMissionSteps.findLast(e => e.completed);
+			// last['show'] = true;
+			return this.missionsStore.getMissionSteps.filter(e => e.show).reverse();
+			// if (this.missionsStore.getMissionSteps.length > 3) {
+			// 	let seeMoreNext = { id:'next', icon:'pi pi-angle-double-up', color:'#aeaeae' };
+			// 	let seeMorePrev = { id:'prev', icon:'pi pi-angle-double-down', color:'#aeaeae' };
+			// 	this.stepsToDisplay.unshift(seeMoreNext);
+			// 	this.stepsToDisplay.push(seeMorePrev);
+			// }
+		}
 	},
 	created() {
-		console.log(this.missionId);
-		this.missionsStore.setCurrentMission(this.missionId);
-		this.steps = this.missionsStore.currentMission.missionSteps;
-		console.log(this.steps);
-		for (let i = 0; i < this.steps.length; i++) {
-			const e = this.steps[i];
-			e.id = i;
-			e['icon'] = e.completed ? 'pi pi-check-circle' : 'pi pi-circle';
-			e['color'] = e.completed ? '#9cff57' : '#ffeb3b';
-			e['show'] = true;
-		}
-		// let next2 = this.steps.filter(e => !e.completed).slice(0,2);
-		// console.log(next2);
-		// next2.forEach(e => e['show']= true);
-		// let next = next2[0];
-		// next['icon'] = 'pi pi-chevron-circle-up';
-		// next['color'] = '#ffab00';
-		// let last = this.steps.findLast(e => e.completed);
-		// last['show'] = true;
-		this.stepsToDisplay = this.steps.filter(e => e.show).reverse();
-		// if (this.steps.length > 3) {
-		// 	let seeMoreNext = { id:'next', icon:'pi pi-angle-double-up', color:'#aeaeae' };
-		// 	let seeMorePrev = { id:'prev', icon:'pi pi-angle-double-down', color:'#aeaeae' };
-		// 	this.stepsToDisplay.unshift(seeMoreNext);
-		// 	this.stepsToDisplay.push(seeMorePrev);
-		// }
+		console.log(this.$route.params);
+		const id = 'id' in this.$route.params ? this.$route.params.id : this.$route.params.truckId;
+		this.missionsStore.setCurrentMission(id);
 	},
 	methods:{
 		show(id) {
 			if (id === 'next' || id === 'prev') {
-				this.steps.filter(e => id === 'next' ? !e.completed : e.completed).forEach(e => e['show'] = true);
+				this.missionsStore.getMissionSteps.filter(e => id === 'next' ? !e.completed : e.completed).forEach(e => e['show'] = true);
 				let seeMore = this.stepsToDisplay.find(e => e.id === (id === 'next' ? 'prev' : 'next'));
-				this.stepsToDisplay = this.steps.filter(e => e.show).reverse();
+				this.stepsToDisplay = this.missionsStore.getMissionSteps.filter(e => e.show).reverse();
 				if (seeMore) this.stepsToDisplay.splice((id === 'next' ? this.stepsToDisplay.length : 0), 0, seeMore);
 			}
 		}

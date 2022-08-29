@@ -4,7 +4,7 @@
       :value="filteredComplaints"
       layout="grid"
       :paginator="true"
-      :rows="9"
+      :rows="8"
       class="m-5"
     >
       <template #header>
@@ -24,19 +24,17 @@
       </template>
       <template #grid="slotProps">
         <div
-          class="col-12 md:col-4"
+          class="col-12 md:col-3"
           style="background-color: #EFF3F8"
         >
-          <Card
-            style="margin: 30px 30px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
-          >
+          <Card class="m-3 md:m-5">
             <template #title>
               <p style="text-transform: capitalize">
                 {{ slotProps.data.title }}
               </p>
             </template>
             <template #subtitle>
-              <ul style="list-style-type:none; text-align: start">
+              <ul style="margin:0; list-style-type:none; text-align: start">
                 <li> ID: {{ slotProps.data.id }} </li>
                 <li> Status: <span :class="'complaint-'+slotProps.data.status.toLowerCase()"> {{ slotProps.data.status }} </span></li>
                 <li v-if="userStore.isManager">
@@ -45,6 +43,7 @@
               </ul>
             </template>
             <template #content>
+              <Divider />
               {{ slotProps.data.message }}
             </template>
             <template #footer>
@@ -142,10 +141,19 @@ a { text-decoration: none; }
   font-weight: bold;
   padding: 1px 5px;
 }
+li{
+  word-break: break-all;
+}
 ::v-deep(.grid-nogutter){
   background-color: #EFF3F8;
 }
 ::v-deep(.p-paginator){
   background-color: #f8f9fa;
+}
+::v-deep(.p-card-footer){
+  padding-top: 0;
+}
+::v-deep(.p-card-content){
+  padding: 0;
 }
 </style>

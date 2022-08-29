@@ -11,7 +11,6 @@ import '/node_modules/primeflex/primeflex.css';
 import { createWebHistory, createRouter } from 'vue-router';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import MapComponent from '@/components/map/MapComponent';
-import MissionsList from '@/components/missions/MissionsList';
 import ComplaintsList from '@/components/complaints/ComplaintsList';
 import AccountComponent from '@/components/authentication/AccountComponent';
 import MissionDetails from '@/components/missions/MissionDetails';
@@ -21,8 +20,9 @@ import RegistrationForm from '@/components/authentication/RegistrationForm';
 import { useUserStore } from '@/stores/UserStore';
 import ComplaintForm from '@/components/complaints/ComplaintForm';
 import { useSocketStore } from '@/stores/SocketStore';
-import TrucksList from '@/components/trucks/TrucksList';
 import CollectionPointForm from '@/components/collectionPoints/CollectionPointForm';
+import MissionsListComponent from '@/components/missions/MissionsListComponent';
+import TrucksListComponent from '@/components/trucks/TrucksListComponent';
 
 const routes = [
 	{
@@ -45,17 +45,22 @@ const routes = [
 	{
 		path: '/dashboard/trucks',
 		name: 'Trucks',
-		component: TrucksList,
+		component: TrucksListComponent,
 
 	},
 	{
 		path: '/dashboard/missions',
 		name: 'Missions',
-		component: MissionsList,
+		component: MissionsListComponent,
 	},
 	{
 		path: '/dashboard/missions/:id',
 		name: 'Missions Details',
+		component: MissionDetails,
+	},
+	{
+		path: '/dashboard/missions/truck/:truckId',
+		name: 'Missions Details By Truck',
 		component: MissionDetails,
 	},
 	{

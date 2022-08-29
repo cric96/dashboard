@@ -1,7 +1,7 @@
 <template>
   <Card
     v-if="!userStore.isLogged"
-    class="w-full"
+    class="hidden md:block md:w-8"
   >
     <template #content>
       <div class="grid">
@@ -14,23 +14,15 @@
           </Divider>
         </div>
         <div class="col-5 flex align-items-center justify-content-center">
-          <router-link
-            v-slot="{href, navigate}"
-            :to="'/dashboard/account/registration'"
-          >
-            <Button
-              :href="href"
-              label="Sign Up"
-              icon="pi pi-user-plus"
-              class="p-button-success"
-              @click="navigate"
-            />
-          </router-link>
+          <SingUpButton />
         </div>
       </div>
     </template>
   </Card>
-  <Card v-if="userStore.isLogged">
+  <MobileAccount class="block md:hidden" />
+  <Card
+    v-if="userStore.isLogged"
+  >
     <template #title>
       {{ userStore.getUserName }}
     </template>
@@ -50,9 +42,13 @@ import LoginForm from '@/components/authentication/LoginForm';
 import { useUserStore } from '@/stores/UserStore';
 import { useSocketStore } from '@/stores/SocketStore';
 import { useNotificationStore } from '@/stores/NotificationStore';
+import MobileAccount from '@/components/authentication/MobileAccount';
+import SingUpButton from '@/components/authentication/SingUpButton';
 export default {
 	name: 'AccountComponent',
 	components:{
+		SingUpButton,
+		MobileAccount,
 		LoginForm,
 		Button,
 		Divider,
@@ -69,13 +65,6 @@ export default {
 
 		};
 	},
-	// created() {
-	// 	if (this.socketStore.sessionId !== '' && this.userStore.isLogged) {
-	// 		this.socketStore.reconnect();
-	// 	} else {
-	// 		console.log('User not connected ' + this.socketStore.sessionId + '  ' + this.userStore.isLogged);
-	// 	}
-	// },
 	methods:{
 		logout() {
 			this.userStore.logout();
@@ -88,5 +77,4 @@ export default {
 </script>
 
 <style scoped>
-a { text-decoration: none; }
 </style>

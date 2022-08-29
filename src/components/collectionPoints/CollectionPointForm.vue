@@ -182,7 +182,7 @@ export default {
 					latitude: this.latitude,
 					longitude: this.longitude
 				};
-				axios.post('http://localhost:3001/collectionpoints/', cp)
+				axios.post(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/collectionpoints/', cp)
 					.then(response => {
 						if (response.status === 200) {
 							console.log(response.data);
@@ -194,7 +194,7 @@ export default {
 									},
 									collectionPointId:response.data.id
 								};
-								return axios.post('http://localhost:3001/dumpsters/', dump);
+								return axios.post(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/dumpsters/', dump);
 							})).then(() => {
 								this.toggleDialog();
 							});

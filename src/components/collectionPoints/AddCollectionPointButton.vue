@@ -32,12 +32,4 @@ export default {
 </script>
 
 <style scoped>
-::v-deep(.p-button){
-  background-color:darkgreen;
-  border-color:darkgreen;
-}
-::v-deep(.p-button:hover){
-  background-color:darkgreen;
-  border-color:darkgreen;
-}
 </style>

@@ -26,8 +26,8 @@
     </template>
   </Dialog>
 
-  <div class="flex justify-content-center">
-    <Card style="width: 40vw">
+  <div class="flex justify-content-center w-full h-full">
+    <Card class="md:w-3">
       <template #title>
         Create a new complaint
       </template>

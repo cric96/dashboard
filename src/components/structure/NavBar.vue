@@ -2,9 +2,12 @@
   <div>
     <Menubar
       :model="items"
+      class="md:py-2 p-0"
     >
       <template #start>
-        SWC
+        <h3 class="m-3">
+          Smart Waste Collection
+        </h3>
       </template>
       <template #item="{item}">
         <router-link
@@ -13,9 +16,8 @@
           :to="item.to"
         >
           <Button
-            class="p-button-text"
+            class="p-button-text nav-button md:text-lg"
             :href="href"
-            style="color: darkgreen"
             @click="navigate"
           >
             {{ item.label }}
@@ -25,11 +27,10 @@
       <template #end>
         <span class="p-button-set">
           <Button
-            v-if="userStore.isLogged"
+            v-if="userStore.isCitizen"
             icon="pi pi-bell"
-            class="p-button-text p-button-rounded"
+            class="p-button-text p-button-rounded nav-button"
             :badge="notificationsBadge"
-            style="color:darkgreen; font-weight: bold"
             @click="toggleOP"
           />
           <OverlayPanel ref="op">
@@ -42,8 +43,7 @@
             <Button
               :href="href"
               icon="pi pi-user"
-              class="p-button-text p-button-rounded"
-              style="color:darkgreen; font-weight: bold"
+              class="p-button-text p-button-rounded nav-button"
               @click="navigate"
             />
           </router-link></span>
@@ -118,18 +118,30 @@ export default {
 
 <style scoped>
 .p-menubar{
-  background-color: transparent !important;
-  border-color: transparent;
+  background-color: #303f9f !important;
+  border:0;
+  border-radius:0;
+  color:white;
+}
+::v-deep(.p-menubar-root-list){
+  background-color: #303f9f !important;
+  border:0;
+  color:white;
 }
 
-.p-menuitem{
-  border-color: darkgreen;
-  border: 2pt;
+::v-deep(.p-menubar-button){
+  background-color: #303f9f !important;
+  border:0;
+  color:white !important;
 }
+
+.nav-button{
+  color:white !important;
+  font-weight: bold !important;
+}
+/*.p-menuitem{*/
+/*  border-color: darkgreen;*/
+/*  border: 2pt;*/
+/*}*/
 a { text-decoration: none; }
-
-::v-deep(.p-button-text){
-  font-weight: bold;
-  color: darkgreen;
-}
 </style>

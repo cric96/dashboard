@@ -1,19 +1,23 @@
 <template>
   <div class="flex flex-wrap align-content-start w-100">
-    <Card>
+    <Card class="">
       <template #title>
-        <div class="flex flex-wrap justify-content-end align-content-center">
+        <div class="flex flex-column flex-wrap justify-content-end align-content-center">
           <div>
-            <h3 style="margin: 0">
+            <h3
+              class="text-base lg:text-2xl m-0"
+            >
               {{ dumpster.id }}
             </h3>
           </div>
-          <Button
-            v-if="userStore.isManager"
-            icon="pi pi-trash"
-            class="p-button-danger p-button-rounded"
-            @click="$emit('delete')"
-          />
+          <div class="flex justify-content-end">
+            <Button
+              v-if="userStore.isManager"
+              icon="pi pi-trash"
+              class="p-button-danger p-button-rounded"
+              @click="$emit('delete')"
+            />
+          </div>
         </div>
 
         <Divider />
@@ -28,7 +32,8 @@
             </p>
             <div>
               Type of waste: <Tag
-                :value="dumpsterOrdinaryWaste.wasteName"
+                class="py-2 px-3 m-1 text-sm"
+                :value="dumpsterOrdinaryWaste.wasteName.replace('_', ' ')"
                 :rounded="true"
                 :style="cssDumpsterColor"
               />
@@ -89,7 +94,8 @@ export default {
 		},
 		cssDumpsterColor() {
 			return {
-				'background-color': this.dumpsterOrdinaryWaste.wasteColor.toLowerCase()
+				'background-color': this.dumpsterOrdinaryWaste.wasteColor.toLowerCase(),
+				'color': this.dumpsterOrdinaryWaste.wasteName === 'PLASTIC_ALUMINIUM' ? 'black' : 'white'
 			};
 		}
 	}

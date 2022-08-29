@@ -2,11 +2,7 @@
   <Toast />
   <div
     id="main"
-    :style="{'background-color':'#dcedc8',
-             '-webkit-background-size': 'cover',
-             '-moz-background-size': 'cover',
-             '-o-background-size': 'cover',
-             'background-size': 'cover'}"
+    style="background-color: #f4f4f8"
   >
     <NavBar />
     <div class="flex justify-content-center my-5">
@@ -33,7 +29,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   padding: 0 !important;
   margin: 0 !important;
   height: 100vh !important;

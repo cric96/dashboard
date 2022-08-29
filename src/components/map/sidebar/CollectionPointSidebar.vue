@@ -1,8 +1,15 @@
 <template>
-  <Sidebar @item-updated="updateCollectionPointId">
+  <Sidebar
+    class="md:min-w-min"
+    @item-updated="updateCollectionPointId"
+  >
     <template #header>
       <div class="flex flex-wrap align-content-center justify-content-end">
-        <div><h1> {{ collectionPointId }} </h1></div>
+        <div>
+          <h1 class="text-base lg:text-2xl">
+            {{ collectionPointId }}
+          </h1>
+        </div>
         <div
           v-if="userStore.isManager"
           class="flex justify-content-around"
@@ -24,8 +31,16 @@
       v-if="dumpsters!==null"
       #content
     >
-      <div class="flex flex-column justify-content-evenly">
-        <ProgressSpinner v-if="fetchingDumpster" />
+      <div
+        v-if="fetchingDumpster"
+        class="flex justify-content-center"
+      >
+        <ProgressSpinner />
+      </div>
+      <div
+        v-if="!fetchingDumpster"
+        class="flex flex-column justify-content-evenly"
+      >
         <DumpsterCard
           v-for="d in dumpsters"
           :key="d"
@@ -76,12 +91,16 @@ export default {
 			showDumpsterForm:false,
 			collectionPointId:null,
 			fetchingDumpster:true,
+			dumpstersPolling:null,
 			dumpsters:[],
 		};
 	},
+	unmounted() {
+		clearInterval(this.dumpstersPolling);
+	},
 	methods:{
 		fetchCollectionPointDumpsters() {
-			this.dumpsters = [];
+			console.log('Fetching');
 			axios.get(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/collectionpoints/'+this.collectionPointId+'/dumpsters', {
 				headers: {
 					'Access-Control-Allow-Origin': '*',
@@ -90,14 +109,16 @@ export default {
 				}
 			})
 				.then(res => {
-					console.log(res);
 					this.fetchingDumpster = false;
-					res.data.forEach(d => this.dumpsters.push(d));
+					this.dumpsters = res.data;
 				});
 		},
 		updateCollectionPointId(id) {
 			this.collectionPointId = id;
+			this.fetchingDumpster=true;
 			this.fetchCollectionPointDumpsters();
+			if (this.dumpstersPolling !== null) clearInterval(this.dumpstersPolling);
+			this.dumpstersPolling = setInterval(this.fetchCollectionPointDumpsters, 3000);
 		},
 		deleteDumpster(d) {
 			this.dumpsters.splice(this.dumpsters.indexOf(d), 1);
@@ -121,6 +142,9 @@ export default {
 					this.dumpsters.push(res.data);
 				}
 			});
+		},
+		updateDumpsters() {
+
 		}
 	},
 };
