@@ -23,7 +23,7 @@
     </template>
   </Dialog>
 
-  <div class="flex justify-content-center max-w-25rem">
+  <div class="flex justify-content-center max-w-25rem mt-5">
     <Card>
       <template #title>
         Add new Collection Point

@@ -142,7 +142,7 @@ export default {
 				collectionPointId:this.collectionPointId
 			};
 			clearInterval(this.dumpstersPolling);
-			axios.post(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/dumpsters/', dump).then(res => {
+			axios.post(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/dumpsters', dump).then(res => {
 				if (res.status === 200) {
 					console.log(res.data);
 					var tmp = this.dumpsters;

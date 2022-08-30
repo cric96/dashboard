@@ -38,7 +38,7 @@
           </OverlayPanel>
           <Button
             icon="pi pi-user"
-            class="p-button-text p-button-rounded nav-button mx-3"
+            class="p-button-text p-button-rounded nav-button md:mx-3"
             @click="account"
           />
           <OverlayPanel ref="lop">

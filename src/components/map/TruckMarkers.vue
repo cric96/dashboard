@@ -2,9 +2,9 @@
   <MarkerComponent
     v-for="t in trucks"
     :key="t"
-    :lat="t.position.latitude"
-    :lng="t.position.longitude"
-    :icon-path="'https://i.postimg.cc/tCcLj6dL/garbage-truck.png'"
+    :position="t.position"
+    :icon-path="'https://i.postimg.cc/YqCCTXyV/lorry.png'"
+    :icon-size="48"
     @click="$emit('open-sidebar', t.truckId)"
   />
 </template>
@@ -21,14 +21,18 @@ export default {
 	data() {
 		return {
 			trucks:[],
+			truckPolling:null,
 		};
 	},
 	mounted() {
 		this.getTrucksInMission();
+		this.truckPolling = setInterval(() => this.updateTruckInMission(), 2000);
+	},
+	unmounted() {
+		clearInterval(this.truckPolling);
 	},
 	methods:{
 		getTrucksInMission() {
-			this.trucks = [];
 			axios.get(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/inMission/', {
 				headers: {
 					'Access-Control-Allow-Origin': '*',
@@ -37,7 +41,24 @@ export default {
 				}
 			})
 				.then(res => {
-					res.data.forEach(t => this.trucks.push(t));
+					this.trucks = res.data;
+				});
+		},
+		updateTruckInMission() {
+			axios.get(process.env.VUE_APP_TRUCK_MICROSERVICE+'/trucks/inMission/', {
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+					'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+				}
+			})
+				.then(res => {
+					res.data.forEach(t => {
+						const truck = this.trucks.find(ot => ot.truckId === t.truckId);
+						if (truck.position !== t.position) {
+							truck.position = t.position;
+						}
+					});
 				});
 		}
 	},

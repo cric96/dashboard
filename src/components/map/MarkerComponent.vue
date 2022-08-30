@@ -1,6 +1,7 @@
 <template>
   <l-marker
-    :lat-lng="[lat,lng]"
+    ref="marker"
+    :lat-lng="[position.latitude, position.longitude]"
     :icon="createIcon"
   />
 </template>
@@ -15,29 +16,30 @@ export default {
 		LMarker,
 	},
 	props: {
-		'lat': {
-			type: Number,
-			default: 0.0,
-			require: true,
-		},
-		'lng': {
-			type: Number,
-			default: 0.0,
+		'position': {
+			type: Object,
+			// eslint-disable-next-line vue/require-valid-default-prop
+			default: { latitude:0.0, longitude:0.0 },
 			require: true,
 		},
 		// eslint-disable-next-line vue/require-default-prop
 		'iconPath': {
 			type: String,
 		},
+		'iconSize':{
+			type:Number,
+			require: false,
+			default: 32
+		}
 	},
 	computed:{
 		createIcon() {
 			return L.icon({
 				iconUrl: this.iconPath,
-				iconSize:     [32, 32], // size of the icon
+				iconSize:     [this.iconSize, this.iconSize], // size of the icon
 			});
 		}
-	}
+	},
 };
 </script>
 

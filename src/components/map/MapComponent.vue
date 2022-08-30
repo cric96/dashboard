@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-column mt-5">
+  <div class="flex flex-column mt-3">
     <div
       class="flex align-content-center justify-content-end m-2"
     >
@@ -38,6 +38,12 @@
           v-if="userStore.isManager"
           @open-sidebar="openSidebar"
         />
+        <MarkerComponent
+          v-if="!userStore.isManager"
+          :position="userCoords"
+          :icon-path="'https://i.postimg.cc/sgsT4h63/user-icon-bg.png'"
+          :icon-size="36"
+        />
       </l-map>
     </div>
   </div>
@@ -69,11 +75,13 @@ import CollectionPointMarkers from '@/components/map/CollectionPointMarkers';
 import TruckMarkers from '@/components/map/TruckMarkers';
 import { useUserStore } from '@/stores/UserStore';
 import AddCollectionPointButton from '@/components/collectionPoints/AddCollectionPointButton';
+import MarkerComponent from '@/components/map/MarkerComponent';
 
 
 export default {
 	name: 'MapComponent',
 	components: {
+		MarkerComponent,
 		CollectionPointMarkers,
 		TruckSidebar,
 		CollectionPointSidebar,

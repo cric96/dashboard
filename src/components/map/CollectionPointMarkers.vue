@@ -2,8 +2,7 @@
   <MarkerComponent
     v-for="cp in collectionPoints"
     :key="cp"
-    :lat="cp.position.latitude"
-    :lng="cp.position.longitude"
+    :position="cp.position"
     :icon-path="'https://i.postimg.cc/PfCmTmb2/collection-point.png'"
     @click="$emit('open-sidebar', cp.id)"
   />
