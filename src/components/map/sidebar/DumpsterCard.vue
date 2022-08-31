@@ -87,7 +87,7 @@ export default {
 			return this.dumpster.available ? 'available': 'not available';
 		},
 		dumpsterOccupiedPercentage() {
-			return this.dumpster.occupiedVolume.value/this.dumpster.dumpsterType.size.capacity*100;
+			return Math.round(this.dumpster.occupiedVolume.value/this.dumpster.dumpsterType.size.capacity*100);
 		},
 		dumpsterOrdinaryWaste() {
 			return this.dumpster.dumpsterType.typeOfOrdinaryWaste;
