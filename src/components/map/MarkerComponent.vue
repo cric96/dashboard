@@ -1,33 +1,44 @@
 <template>
   <l-marker
-    :lat-lng="[lat,lng]"
-    :icon="icon"
+    ref="marker"
+    :lat-lng="[position.latitude, position.longitude]"
+    :icon="createIcon"
   />
 </template>
 
 <script>
 import { LMarker } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 export default {
 	name: 'MarkerComponent',
 	components:{
 		LMarker,
 	},
 	props: {
-		'lat': {
-			type: Number,
-			default: 0.0,
-			require: true,
-		},
-		'lng': {
-			type: Number,
-			default:0.0,
+		'position': {
+			type: Object,
+			// eslint-disable-next-line vue/require-valid-default-prop
+			default: { latitude:0.0, longitude:0.0 },
 			require: true,
 		},
 		// eslint-disable-next-line vue/require-default-prop
-		'icon':{
-
+		'iconPath': {
+			type: String,
 		},
+		'iconSize':{
+			type:Number,
+			require: false,
+			default: 32
+		}
+	},
+	computed:{
+		createIcon() {
+			return L.icon({
+				iconUrl: this.iconPath,
+				iconSize:     [this.iconSize, this.iconSize], // size of the icon
+			});
+		}
 	},
 };
 </script>

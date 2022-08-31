@@ -2,49 +2,46 @@
   <MarkerComponent
     v-for="cp in collectionPoints"
     :key="cp"
-    :lat="cp.position.latitude"
-    :lng="cp.position.longitude"
-    :icon="cpIcon"
+    :position="cp.position"
+    :icon-path="'https://i.postimg.cc/PfCmTmb2/collection-point.png'"
     @click="$emit('open-sidebar', cp.id)"
   />
 </template>
 
 <script>
 import MarkerComponent from '@/components/map/MarkerComponent';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
-import randomLatitude from 'random-latitude';
-import randomLongitude from 'random-longitude';
+
 export default {
 	name: 'CollectionPointMarkers',
 	components: { MarkerComponent },
-	emits: ['open-sidebar'],
+	props:{
+		'cpToDelete':{
+			type:String,
+			default: null,
+		}
+	},
+	emits: ['open-sidebar', 'deleted'],
 	data() {
 		return {
 			collectionPoints:[],
-			cpIcon: L.icon({
-				iconUrl: 'https://i.postimg.cc/PfCmTmb2/collection-point.png',
-				iconSize:     [32, 32], // size of the icon
-			}),
 		};
 	},
-	mounted() {
-		for (let i = 0; i < 6; i++) {
-			let lat = randomLatitude({ min:44.14, max:44.20 });
-			let lng = randomLongitude({ min:12.24, max:12.30 });
-			this.collectionPoints.push({
-				id:'Cp-'+i,
-				position:{
-					latitude:lat,
-					longitude: lng,
-				}
-			});
+	watch:{
+		cpToDelete(cp) {
+			if (cp != null) {
+				this.collectionPoints = this.collectionPoints.filter(c => c.id !== cp);
+				this.$emit('deleted');
+				axios.delete(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/collectionpoints/'+cp).then(res => console.log(res));
+			}
 		}
-		//this.getCollectionPoints();
+	},
+	mounted() {
+		this.fetchCollectionPoints();
 	},
 	methods : {
-		getCollectionPoints() {
+		fetchCollectionPoints() {
 			axios.get(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/collectionpoints', {
 				headers: {
 					'Access-Control-Allow-Origin': '*',
@@ -53,7 +50,6 @@ export default {
 				}
 			})
 				.then(res => {
-					console.log(res);
 					res.data.forEach(c => this.collectionPoints.push(c));
 				});
 		}
