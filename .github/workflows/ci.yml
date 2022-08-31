@@ -1,4 +1,4 @@
-name: Deploy
+name: Build and GHPages Deploy
 
 on:
   workflow_dispatch:
