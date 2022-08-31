@@ -5,8 +5,10 @@
     class="p-sidebar-md"
     @hide="hide"
   >
-    <slot name="header" />
-    <Divider />
+    <template #header>
+      <slot name="header" />
+      <Divider />
+    </template>
     <slot name="content" />
   </Sidebar>
 </template>
@@ -54,5 +56,7 @@ export default {
 </script>
 
 <style scoped>
-
+.p-sidebar-header{
+  margin-bottom: 0 !important;
+}
 </style>
