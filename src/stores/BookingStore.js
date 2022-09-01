@@ -7,7 +7,7 @@ export const useBookingStore = defineStore('booking', {
 	},
 	actions:{
 		updateBooking(bn) {
-			let old = this.bookings.filter(b => b._id === bn._id);
+			let old = this.bookings.find(b => b._id === bn._id);
 			this.bookings.splice(this.bookings.indexOf(old), 1, bn);
 		},
 		fetchUserBookings(userId) {

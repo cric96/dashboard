@@ -112,7 +112,7 @@ router.beforeEach((to) => {
 		return '/dashboard/account';
 	}
 	if (socketStore.sessionId !== '' && userStore.isLogged) {
-		socketStore.reconnect();
+		socketStore.connect(userStore.userId);
 	}
 });
 

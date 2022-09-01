@@ -50,7 +50,7 @@ export default {
 				}
 			})
 				.then(res => {
-					res.data.forEach(c => this.collectionPoints.push(c));
+					this.collectionPoints = res.data;
 				});
 		}
 	}

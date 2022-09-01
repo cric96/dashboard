@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-column justify-content-start card-container m-5 w-full">
+  <div class="flex flex-column md:justify-content-center card-container md:m-5 w-full">
     <ProgressSpinner
       v-if="steps.length === 0"
     />
@@ -18,35 +18,46 @@
         </ul>
       </template>
     </Card>
-    <Timeline
-      :value="steps.filter(s => s.show).reverse()"
-      align="alternate"
-      class="w-full"
+    <div
+      v-if="steps.length > 0"
+      class="flex justify-content-center align-items-center md:w-full"
     >
-      <template #marker="slotProps">
-        <Button
-          class="p-button-rounded"
-          :icon="slotProps.item.icon"
-          :style="{backgroundColor: slotProps.item.color, borderColor:slotProps.item.color}"
-          @click="show(slotProps.item.id)"
-        />
-      </template>
-      <template #content="slotProps">
-        <div class="flex flex-wrap align-content-start w-full">
-          <Card v-if="slotProps.item.id !== 'next' && slotProps.item.id !== 'prev' && slotProps.item.id !== 'start' && slotProps.item.id !== 'end'">
-            <template #title>
-              STEP #{{ slotProps.item.id }}
-            </template>
-            <template #content>
-              <div>
-                <i class="pi pi-map-marker"> <span class="mx-1">{{ slotProps.item.stepId }}</span>
-                </i>
-              </div>
-            </template>
-          </Card>
-        </div>
-      </template>
-    </Timeline>
+      <div class="flex md:w-10">
+        <Timeline
+          :value="steps.filter(s => s.show).reverse()"
+          :align="'alternate'"
+          class="w-full"
+        >
+          <template #marker="slotProps">
+            <Button
+              class="p-button-rounded"
+              :icon="slotProps.item.icon"
+              :style="{backgroundColor: slotProps.item.color, borderColor:slotProps.item.color}"
+              @click="show(slotProps.item.id)"
+            />
+          </template>
+          <template #content="slotProps">
+            <div class="mb-3">
+              <Card v-if="slotProps.item.id !== 'next' && slotProps.item.id !== 'prev' && slotProps.item.id !== 'start' && slotProps.item.id !== 'end'">
+                <template #title>
+                  <div
+                    class="m-0 md:m-3 text-base md:text-3xl"
+                  >
+                    STEP #{{ slotProps.item.id }}
+                  </div>
+                  <Divider class="hidden md:block" />
+                </template>
+                <template #content>
+                  <div class="md:mt-3 md:pt-3">
+                    <span class="text-xs md:text-2xl"> <i class="pi pi-map-marker text-xs md:text-xl" /> {{ slotProps.item.stepId }}</span>
+                  </div>
+                </template>
+              </Card>
+            </div>
+          </template>
+        </Timeline>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,6 +68,7 @@ import Button from 'primevue/button';
 import { useMissionStore } from '@/stores/MissionStore';
 import ProgressSpinner from 'primevue/progressspinner';
 import axios from 'axios';
+import Divider from 'primevue/divider';
 
 export default {
 	name: 'MissionDetails',
@@ -65,6 +77,7 @@ export default {
 		Card,
 		Button,
 		ProgressSpinner,
+		Divider,
 	},
 	setup() {
 		const missionsStore = useMissionStore();
@@ -84,21 +97,25 @@ export default {
 		this.missionsStore.getOrFetchMissions().then(missions => {
 			this.findMissionAndSetSteps(missions, this.id);
 			this.polling = setInterval(() => {
-				this.missionsStore.fetchMissions().then(missions => {
-					const updatedSteps = this.findMissionFromId(missions, this.id).missionSteps;
-					this.setStepsUI(updatedSteps);
-					updatedSteps.forEach(ns => {
-						const os = this.steps.find(s => s.stepId === ns.stepId);
-						ns.show = os.show;
+				if (this.steps.length > 0 && this.steps.every(s => 'show' in s)) {
+					this.missionsStore.fetchMissions().then(missions => {
+						const updatedSteps = this.findMissionFromId(missions, this.id).missionSteps;
+						this.setStepsUI(updatedSteps);
+						updatedSteps.forEach(ns => {
+							const os = this.steps.find(s => s.stepId === ns.stepId);
+							if (os != null) {
+								ns.show = os.show;
+							}
+						});
+						let ongoing = updatedSteps.filter(s => !s.completed)[0];
+						if (ongoing !== null) {
+							ongoing.icon = 'pi pi-clock';
+							ongoing.color = '#ffab00';
+							ongoing.show = true;
+						}
+						this.steps.splice(1, updatedSteps.length, ...updatedSteps);
 					});
-					let ongoing = updatedSteps.filter(s => !s.completed)[0];
-					if (ongoing !== null) {
-						ongoing.icon = 'pi pi-clock';
-						ongoing.color = '#ffab00';
-						ongoing.show = true;
-					}
-					this.steps.splice(1, updatedSteps.length, ...updatedSteps);
-				});
+				}
 			}, 3000);
 		});
 	},
@@ -120,7 +137,6 @@ export default {
 		findMissionAndSetSteps(missions, id) {
 			this.currentMission = this.findMissionFromId(missions, id);
 			this.steps = this.currentMission.missionSteps;
-			console.log('Original Steps ' + this.steps);
 			this.updateSteps();
 		},
 		setStepsUI(steps) {
@@ -221,4 +237,7 @@ export default {
 }
 a { text-decoration: none; }
 
+::v-deep(.p-card-content){
+  padding-top: 0 !important;
+}
 </style>

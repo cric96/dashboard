@@ -10,9 +10,9 @@
     >
       <template #header />
       <template #list="slotProps">
-        <div class="col-12">
+        <div class="col-12 bg-white m-1 md:m-0">
           <div class="flex flex-column md:flex-row align-items-center justify-content-between md:p-5">
-            <div class="flex flex-column align-items-center md:align-items-start justify-content-start md:text-left m-2">
+            <div class="flex flex-column align-items-center md:align-items-start justify-content-start md:text-left mx-2">
               <h3 class="text-lg md:text-3xl my-2 ">
                 {{ slotProps.data.missionId }}
               </h3>
@@ -90,6 +90,9 @@ a { text-decoration: none; }
 
 .product-description {
   margin: 0 0 1rem 0;
+}
+::v-deep(.p-grid){
+  background-color: #f4f4f8;
 }
 
 </style>

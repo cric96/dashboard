@@ -27,7 +27,7 @@
         </div>
       </template>
       <template #list="slotProps">
-        <div class="col-12">
+        <div class="col-12 bg-white my-2 md:my-0">
           <div class="flex flex-column md:flex-row align-items-center justify-content-between md:p-5">
             <div class="flex flex-column align-items-center md:align-items-start justify-content-start md:text-left m-2">
               <h3 class="text-lg md:text-3xl my-2 ">
@@ -36,7 +36,10 @@
               <div class="product-description mb-0">
                 Capacity: {{ slotProps.data.capacity }}
               </div>
-              <div class="product-description w-full">
+              <div
+                v-if="slotProps.data.inMission"
+                class="product-description w-full"
+              >
                 <p>Occupied Volume:</p>
                 <ProgressBar
                   class="w-full"
@@ -166,6 +169,9 @@ a { text-decoration: none; }
   color: #ef6c00;
   font-weight: bold;
   padding: 1px 5px;
+}
+::v-deep(.p-grid){
+  background-color: #f4f4f8;
 }
 
 .product-description {

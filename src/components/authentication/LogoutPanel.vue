@@ -6,6 +6,9 @@
     <template #title>
       {{ userStore.getUserName }}
     </template>
+    <template #subtitle>
+      {{ userStore.userId }}
+    </template>
     <template #footer>
       <div class="flex justify-content-center align-items-center">
         <Button
