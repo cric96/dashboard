@@ -2,6 +2,7 @@
   <Sidebar
     class="md:min-w-min"
     @item-updated="updateCollectionPointId"
+    @closed="hideAndEcho"
   >
     <template #header>
       <div class="flex flex-wrap align-content-center justify-content-end">
@@ -85,7 +86,7 @@ export default {
 		ProgressSpinner,
 		ScrollPanel,
 	},
-	emits: ['deleteCollectionPoint'],
+	emits: ['deleteCollectionPoint', 'closed'],
 	setup() {
 		const userStore = useUserStore();
 		return { userStore };
@@ -99,12 +100,8 @@ export default {
 			dumpsters:[],
 		};
 	},
-	unmounted() {
-		clearInterval(this.dumpstersPolling);
-	},
 	methods:{
 		fetchCollectionPointDumpsters() {
-			console.log('Fetching');
 			axios.get(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/collectionpoints/'+this.collectionPointId+'/dumpsters', {
 				headers: {
 					'Access-Control-Allow-Origin': '*',
@@ -113,6 +110,7 @@ export default {
 				}
 			})
 				.then(res => {
+					console.log(res.data);
 					this.fetchingDumpster = false;
 					this.dumpsters = res.data;
 				});
@@ -121,15 +119,14 @@ export default {
 			this.collectionPointId = id;
 			this.fetchingDumpster=true;
 			this.fetchCollectionPointDumpsters();
-			if (this.dumpstersPolling !== null) clearInterval(this.dumpstersPolling);
-			this.dumpstersPolling = setInterval(this.fetchCollectionPointDumpsters, 3000);
+			this.dumpstersPolling = setInterval(() => this.fetchCollectionPointDumpsters(), 3000);
 		},
 		deleteDumpster(d) {
 			clearInterval(this.dumpstersPolling);
 			axios.delete(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/dumpsters/'+d.id).then(res => {
 				console.log(res);
 				this.dumpsters.splice(this.dumpsters.indexOf(d), 1);
-				this.dumpstersPolling = setInterval(this.fetchCollectionPointDumpsters, 3000);
+				this.dumpstersPolling = setInterval(() => this.fetchCollectionPointDumpsters(), 3000);
 			});
 		},
 		addDumpster(d) {
@@ -145,14 +142,19 @@ export default {
 			axios.post(process.env.VUE_APP_DUMPSTER_MICROSERVICE+'/dumpsters', dump).then(res => {
 				if (res.status === 200) {
 					console.log(res.data);
-					var tmp = this.dumpsters;
+					var tmp = [...this.dumpsters];
 					tmp.push(res.data);
-					tmp = tmp.sort((d1, d2) => d1.id.localeCompare(d2.id, 'en', { numeric:true }));
+					tmp = tmp.sort((d1, d2) => d1.id.localeCompare(d2.id, { numeric:true }));
 					this.dumpsters = tmp;
-					this.dumpstersPolling = setInterval(this.fetchCollectionPointDumpsters, 3000);
+					this.dumpstersPolling = setInterval(() => this.fetchCollectionPointDumpsters(), 3000);
 				}
 			});
 		},
+		hideAndEcho() {
+			clearInterval(this.dumpstersPolling);
+			this.dumpstersPolling = null;
+			this.$emit('closed');
+		}
 	},
 };
 </script>

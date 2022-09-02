@@ -11,12 +11,12 @@ export const useComplaintStore = defineStore('complaint', {
 			axios.put(process.env.VUE_APP_COMPLAINT_MICROSERVICE+'/complaints/'+ id);
 		},
 		fetchComplaints() {
-			axios.get(process.env.VUE_APP_COMPLAINT_MICROSERVICE + '/complaints').then(res => this.complaints = res.data);
+			axios.get(process.env.VUE_APP_COMPLAINT_MICROSERVICE + '/complaints').then(res => this.complaints = res.data.reverse());
 
 		},
 		fetchUserComplaints(userId) {
 			axios.get(process.env.VUE_APP_COMPLAINT_MICROSERVICE + '/complaints')
-				.then(res => this.complaints = res.data.filter(c => c.ownerId === userId));
+				.then(res => this.complaints = res.data.filter(c => c.ownerId === userId).reverse());
 
 		}
 	},

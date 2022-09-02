@@ -4,44 +4,25 @@ import axios from 'axios';
 export const useMissionStore = defineStore('mission', {
 	state: () => ({
 		missions:[],
-		currentDetailsId:null,
-		currentMission:null,
-		fetchingMissions:true
+		fetchingMissions:true,
 	}),
 	getters:{
-		getMissionSteps: (state) => {
-			return state.currentMission !== null ? state.currentMission.missionSteps : [];
-		},
+
 	},
 	actions:{
-		fetchMissions(id=null) {
-			axios.get(process.env.VUE_APP_MISSION_MICROSERVICE + '/missions/', {
-				headers: {
-					'Access-Control-Allow-Origin': '*',
-					'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-					'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-				}
-			}).then(res => {
+		fetchMissions() {
+			return axios.get(process.env.VUE_APP_MISSION_MICROSERVICE + '/missions/').then(res => {
 				if (res.status === 200) {
 					this.fetchingMissions = false;
 					this.missions = res.data;
-					if (id !== null) this.currentMission = this.findMissionFromId(id);
 				}
+				return Promise.resolve(res.data);
 			});
 		},
-		setCurrentMission(id) {
-			if (this.missions.length === 0) {
-				this.fetchMissions(id);
-			} else {
-				this.currentMission = this.findMissionFromId(id);
-			}
+		getOrFetchMissions() {
+			return this.missions.length === 0 ?
+				this.fetchMissions()
+				: Promise.resolve(this.missions);
 		},
-		findMissionFromId(id) {
-			if (id.startsWith('Truck')) {
-				return this.missions.find(m => m.truckId === id);
-			} else {
-				return this.missions.find(m => m.missionId === id);
-			}
-		}
 	},
 });

@@ -2,6 +2,7 @@ name: Build and GHPages Deploy
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     paths-ignore:
       - 'README.md'
