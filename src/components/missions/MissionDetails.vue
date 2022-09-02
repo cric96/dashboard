@@ -94,7 +94,7 @@ export default {
 	},
 	mounted() {
 		this.id = 'id' in this.$route.params ? this.$route.params.id : this.$route.params.truckId;
-		this.missionsStore.getOrFetchMissions().then(missions => {
+		this.missionsStore.fetchMissions().then(missions => {
 			this.findMissionAndSetSteps(missions, this.id);
 			this.polling = setInterval(() => {
 				if (this.steps.length > 0 && this.steps.every(s => 'show' in s)) {

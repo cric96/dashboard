@@ -8,7 +8,7 @@
       layout="grid"
       :paginator="true"
       :rows="9"
-      class="m-5"
+      class="m-3 md:m-5"
     >
       <template #header>
         <div class="flex justify-content-between">
@@ -46,8 +46,7 @@
           style="background-color: #EFF3F8;"
         >
           <Card
-            class=" m-2 md:my-3 w-full md:w-9"
-            style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"
+            class=" mt-2 md:my-3 w-full md:w-9"
           >
             <template #title>
               <p>At Home Collection Booking</p>
