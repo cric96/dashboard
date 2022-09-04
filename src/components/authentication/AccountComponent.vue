@@ -1,7 +1,7 @@
 <template>
   <Card
     v-if="!userStore.isLogged"
-    class="hidden md:block md:w-8 mt-5"
+    class="hidden lg:block lg:w-8 lg:m-5"
   >
     <template #content>
       <div class="grid">
@@ -19,7 +19,7 @@
       </div>
     </template>
   </Card>
-  <MobileAccount class="block md:hidden" />
+  <MobileAccount class="block lg:hidden" />
 </template>
 
 <script>

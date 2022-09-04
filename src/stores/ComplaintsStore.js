@@ -2,7 +2,7 @@ import  { defineStore } from 'pinia';
 import axios from 'axios';
 
 export const useComplaintStore = defineStore('complaint', {
-	state: () => ({ complaints:[] }),
+	state: () => ({ complaints:[], isFetchingComplaints:true, }),
 	getters:{
 	},
 	actions:{
@@ -11,12 +11,20 @@ export const useComplaintStore = defineStore('complaint', {
 			axios.put(process.env.VUE_APP_COMPLAINT_MICROSERVICE+'/complaints/'+ id);
 		},
 		fetchComplaints() {
-			axios.get(process.env.VUE_APP_COMPLAINT_MICROSERVICE + '/complaints').then(res => this.complaints = res.data.reverse());
+			this.isFetchingComplaints = true;
+			axios.get(process.env.VUE_APP_COMPLAINT_MICROSERVICE + '/complaints').then(res => {
+				this.complaints = res.data.reverse();
+				this.isFetchingComplaints = false;
+			} );
 
 		},
 		fetchUserComplaints(userId) {
+			this.isFetchingComplaints=true;
 			axios.get(process.env.VUE_APP_COMPLAINT_MICROSERVICE + '/complaints')
-				.then(res => this.complaints = res.data.filter(c => c.ownerId === userId).reverse());
+				.then(res => {
+					this.complaints = res.data.filter(c => c.ownerId === userId).reverse();
+					this.isFetchingComplaints = false;
+				});
 
 		}
 	},

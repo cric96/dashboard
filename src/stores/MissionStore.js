@@ -15,6 +15,8 @@ export const useMissionStore = defineStore('mission', {
 				if (res.status === 200) {
 					this.fetchingMissions = false;
 					this.missions = res.data;
+				} else {
+					console.log(res);
 				}
 				return Promise.resolve(res.data);
 			});

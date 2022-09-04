@@ -41,6 +41,11 @@
           </div>
         </div>
       </template>
+      <template #empty>
+        <p class="m-3">
+          No missions to show
+        </p>
+      </template>
     </DataView>
   </div>
 </template>

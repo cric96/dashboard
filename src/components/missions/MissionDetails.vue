@@ -108,7 +108,7 @@ export default {
 							}
 						});
 						let ongoing = updatedSteps.filter(s => !s.completed)[0];
-						if (ongoing !== null) {
+						if (ongoing !== null && ongoing !== undefined) {
 							ongoing.icon = 'pi pi-clock';
 							ongoing.color = '#ffab00';
 							ongoing.show = true;

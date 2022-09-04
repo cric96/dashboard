@@ -1,5 +1,9 @@
 <template>
-  <div class="flex flex-column w-full">
+  <ProgressSpinner v-if="complaintsStore.isFetchingComplaints" />
+  <div
+    v-if="!complaintsStore.isFetchingComplaints"
+    class="flex flex-column w-full"
+  >
     <DataView
       :value="filteredComplaints"
       layout="grid"
@@ -86,6 +90,7 @@ import Divider from 'primevue/divider';
 import ComplaintFilterPanel from '@/components/complaints/ComplaintFilterPanel';
 import OverlayPanel from 'primevue/overlaypanel';
 import { useComplaintStore } from '@/stores/ComplaintsStore';
+import ProgressSpinner from 'primevue/progressspinner';
 export default {
 	name: 'ComplaintList',
 	components:{
@@ -95,6 +100,7 @@ export default {
 		DataView,
 		Card,
 		Divider,
+		ProgressSpinner,
 	},
 	setup() {
 		const userStore = useUserStore();
