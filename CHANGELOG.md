@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.0...v0.1.1) (2022-09-04)
+
+
+### Bug Fixes
+
+* minor ui adjustments ([4374947](https://github.com/SmartWasteCollection/dashboard/commit/43749474ebb4ebe219bc637d7104aa71beea8d76))
+
 # [0.1.0](https://github.com/SmartWasteCollection/dashboard/compare/v0.0.1...v0.1.0) (2022-09-02)
 
 
