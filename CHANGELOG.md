@@ -1,3 +1,10 @@
+## [0.1.6](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.5...v0.1.6) (2022-09-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency pinia-plugin-persistedstate to v2.2.0 ([300f030](https://github.com/SmartWasteCollection/dashboard/commit/300f030f1e1352b61512259435103bfbdd69f9b0))
+
 ## [0.1.5](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.4...v0.1.5) (2022-09-08)
 
 
