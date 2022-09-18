@@ -1,3 +1,10 @@
+## [0.1.8](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.7...v0.1.8) (2022-09-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency core-js to v3.25.2 ([8b4f0d1](https://github.com/SmartWasteCollection/dashboard/commit/8b4f0d13eb4e17091e13832cfa6bea154d90292b))
+
 ## [0.1.7](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.6...v0.1.7) (2022-09-09)
 
 
