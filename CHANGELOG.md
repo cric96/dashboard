@@ -1,3 +1,10 @@
+## [0.1.14](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.13...v0.1.14) (2022-09-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency vue to v3.2.40 ([8034783](https://github.com/SmartWasteCollection/dashboard/commit/8034783624cd1128b32aa18c5c80a3282e8d493c))
+
 ## [0.1.13](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.12...v0.1.13) (2022-09-26)
 
 
