@@ -1,3 +1,10 @@
+## [0.1.17](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.16...v0.1.17) (2022-10-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency leaflet to v1.9.2 ([bc5cd40](https://github.com/SmartWasteCollection/dashboard/commit/bc5cd403b41ac7d575b1d51af2eb1bf2ff1c92bf))
+
 ## [0.1.16](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.15...v0.1.16) (2022-10-04)
 
 
