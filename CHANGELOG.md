@@ -1,3 +1,10 @@
+## [0.1.29](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.28...v0.1.29) (2022-10-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency primeicons to v6 ([75893e0](https://github.com/SmartWasteCollection/dashboard/commit/75893e0bd3f9d857b1f7699f7a0313f420fddc4b))
+
 ## [0.1.28](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.27...v0.1.28) (2022-10-24)
 
 
