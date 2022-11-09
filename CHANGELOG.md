@@ -1,3 +1,10 @@
+## [0.1.32](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.31...v0.1.32) (2022-11-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency primeflex to v3.3.0 ([49f9933](https://github.com/SmartWasteCollection/dashboard/commit/49f9933fa88870ec9d3d38b2800af2cad2cf3cc1))
+
 ## [0.1.31](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.30...v0.1.31) (2022-11-09)
 
 
