@@ -1,3 +1,10 @@
+## [0.1.40](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.39...v0.1.40) (2022-11-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency primevue to v3.20.0 ([1797d04](https://github.com/SmartWasteCollection/dashboard/commit/1797d04193d2c4448075d7d483892f995eb95477))
+
 ## [0.1.39](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.38...v0.1.39) (2022-11-17)
 
 
