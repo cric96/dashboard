@@ -1,3 +1,10 @@
+## [0.1.43](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.42...v0.1.43) (2022-11-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to v1.2.0 ([61c69c6](https://github.com/SmartWasteCollection/dashboard/commit/61c69c6af9771b358ee163171ca7a421c2021f50))
+
 ## [0.1.42](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.41...v0.1.42) (2022-11-22)
 
 
