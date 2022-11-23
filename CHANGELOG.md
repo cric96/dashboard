@@ -1,3 +1,10 @@
+## [0.1.44](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.43...v0.1.44) (2022-11-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency socket.io-client to v4.5.4 ([fe23e3a](https://github.com/SmartWasteCollection/dashboard/commit/fe23e3a36164cf8b442dfbb11b5378cfe4ba0bd8))
+
 ## [0.1.43](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.42...v0.1.43) (2022-11-22)
 
 
