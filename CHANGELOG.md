@@ -1,3 +1,10 @@
+## [0.1.51](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.50...v0.1.51) (2022-12-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency pinia to v2.0.28 ([69204df](https://github.com/SmartWasteCollection/dashboard/commit/69204df7c3e049eb48233ffe7923ac7813e5be81))
+
 ## [0.1.50](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.49...v0.1.50) (2022-12-08)
 
 
