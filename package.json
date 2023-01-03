@@ -41,7 +41,7 @@
     "@vue/cli-service": "5.0.8",
     "eslint": "8.31.0",
     "eslint-plugin-vue": "9.8.0",
-    "husky": "8.0.2"
+    "husky": "8.0.3"
   },
   "eslintConfig": {
     "root": true,
