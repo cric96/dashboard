@@ -18,7 +18,7 @@
     "leaflet.marker.slideto": "0.3.0",
     "lodash": "4.17.21",
     "moment": "2.29.4",
-    "pinia": "2.0.28",
+    "pinia": "2.0.29",
     "pinia-plugin-persistedstate": "3.0.2",
     "primeflex": "3.3.0",
     "primeicons": "6.0.1",
