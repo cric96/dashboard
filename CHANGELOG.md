@@ -1,3 +1,10 @@
+## [0.1.75](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.74...v0.1.75) (2023-02-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency core-js to v3.28.0 ([e21c0bf](https://github.com/SmartWasteCollection/dashboard/commit/e21c0bfc4c309584a40a3b242320cd3c2aceb436))
+
 ## [0.1.74](https://github.com/SmartWasteCollection/dashboard/compare/v0.1.73...v0.1.74) (2023-02-14)
 
 
